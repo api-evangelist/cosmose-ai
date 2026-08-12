@@ -1,0 +1,33 @@
+generated: '2026-08-11'
+method: searched
+source: https://cosmose.ai/
+plan_count: 0
+plans: []
+detail: >-
+  Cosmose AI publishes no pricing of any kind. There is no /pricing route, no plans page and no self-serve signup on
+  cosmose.ai, cosmose.co or kaikai.ai. The Angular router bundle on cosmose.ai declares 20 routes — home, about-us,
+  blog, careers, privacy-policy, opt-out, web3, results, gdms, landing-page, plus campaign pages (bcg-report,
+  pwc-report, predict-tomorrow, sell-more, understand-now, hainan-shoppers-package, premium-skincare-brand-case-study,
+  chinas-retail-travel-trends-and-predictions-for-2022, coronavirusstaysafeoptout) — and none of them is a pricing,
+  plans, signup or developer route. Commercial engagement is enterprise contact-sales only: the site's conversion
+  events are email-capture and report-download forms, and kaikai.ai offers a merchant-signup lead form rather than an
+  account.
+access_model:
+  pricing: enterprise
+  onboarding: contact-sales
+  trial: false
+  public: false
+  self_serve: false
+evidence:
+- url: https://cosmose.ai/
+  status: 200
+  note: Angular SPA; router config enumerated from main.9ee0c7b345d4cf5c.js. No pricing route.
+- url: https://kaikai.ai/
+  status: 200
+  note: Routes are only click-and-collect, merchant-signup, merchant-signup-dhl. Lead forms, not plans.
+- url: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
+  status: 200
+  note: >-
+    The one public contract exposes POST /v1/merchants (CreateMerchantRequestDto) and POST /v1/contact-forms — i.e.
+    the commercial front door is modelled in the API as a lead-capture form, which corroborates the contact-sales
+    posture rather than contradicting it.

@@ -1,0 +1,275 @@
+generated: '2026-08-11'
+method: probed
+source: live HTTP probes on 2026-08-11
+result: none
+hits: 0
+note: >-
+  NOTHING WAS FOUND. All 42 probes below either 404, 401, or return a soft 200 that is not a document. No
+  common[] pointer is emitted for this file: the WellKnown / SecurityTxt pointers assert that the PROVIDER serves
+  those surfaces, and Cosmose AI does not. This file records the absence so a later run does not have to re-probe and
+  does not mistake the soft 200s for hits.
+soft_200_warning: >-
+  cosmose.ai, www.cosmose.ai, cosmose.co and kaikai.ai are Angular single-page apps whose edge answers HTTP 200 with
+  the index.html shell for EVERY path, including every /.well-known/* path, /llms.txt, /openapi.json and
+  /sitemap.xml. Verified by control: GET https://cosmose.ai/this-path-does-not-exist-control-9271 returned 200 with a
+  body byte-identical to the homepage. Every 200 on these hosts below is that shell, not a document, and is recorded
+  as a MISS.
+hosts_probed:
+- cosmose.ai
+- cosmose.co
+- kaikai.ai
+- api.cosmose.co
+- api.sg.cosmose.co
+- repo.cosmose.co
+probes:
+- host: cosmose.ai
+  path: /.well-known/security.txt
+  status: 200
+  outcome: miss
+  reason: SPA shell (text/html), not RFC 9116 text
+  file: null
+- host: cosmose.ai
+  path: /.well-known/openid-configuration
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: cosmose.ai
+  path: /.well-known/oauth-authorization-server
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: cosmose.ai
+  path: /.well-known/api-catalog
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: cosmose.ai
+  path: /.well-known/ai-plugin.json
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: cosmose.ai
+  path: /.well-known/agent-card.json
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: cosmose.ai
+  path: /.well-known/agent.json
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: cosmose.ai
+  path: /llms.txt
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: cosmose.co
+  path: /.well-known/security.txt
+  status: 200
+  outcome: miss
+  reason: SPA shell (same Angular build as cosmose.ai)
+  file: null
+- host: cosmose.co
+  path: /.well-known/agent-card.json
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: cosmose.co
+  path: /.well-known/agent.json
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: cosmose.co
+  path: /.well-known/openid-configuration
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: cosmose.co
+  path: /.well-known/oauth-authorization-server
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: cosmose.co
+  path: /.well-known/api-catalog
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: cosmose.co
+  path: /.well-known/ai-plugin.json
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: kaikai.ai
+  path: /.well-known/security.txt
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: kaikai.ai
+  path: /.well-known/agent-card.json
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: kaikai.ai
+  path: /.well-known/agent.json
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: kaikai.ai
+  path: /.well-known/openid-configuration
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: kaikai.ai
+  path: /.well-known/oauth-authorization-server
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: kaikai.ai
+  path: /.well-known/api-catalog
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: kaikai.ai
+  path: /.well-known/ai-plugin.json
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: kaikai.ai
+  path: /llms.txt
+  status: 200
+  outcome: miss
+  reason: SPA shell
+  file: null
+- host: api.cosmose.co
+  path: /.well-known/security.txt
+  status: 401
+  outcome: miss
+  reason: gateway requires authentication for every path
+  file: null
+- host: api.cosmose.co
+  path: /.well-known/agent-card.json
+  status: 401
+  outcome: miss
+  file: null
+- host: api.cosmose.co
+  path: /.well-known/agent.json
+  status: 401
+  outcome: miss
+  file: null
+- host: api.cosmose.co
+  path: /.well-known/openid-configuration
+  status: 401
+  outcome: miss
+  file: null
+- host: api.cosmose.co
+  path: /.well-known/oauth-authorization-server
+  status: 401
+  outcome: miss
+  file: null
+- host: api.cosmose.co
+  path: /.well-known/api-catalog
+  status: 401
+  outcome: miss
+  file: null
+- host: api.cosmose.co
+  path: /.well-known/ai-plugin.json
+  status: 401
+  outcome: miss
+  file: null
+- host: api.sg.cosmose.co
+  path: /.well-known/security.txt
+  status: 401
+  outcome: miss
+  file: null
+- host: api.sg.cosmose.co
+  path: /.well-known/agent-card.json
+  status: 401
+  outcome: miss
+  file: null
+- host: api.sg.cosmose.co
+  path: /.well-known/agent.json
+  status: 401
+  outcome: miss
+  file: null
+- host: api.sg.cosmose.co
+  path: /.well-known/openid-configuration
+  status: 401
+  outcome: miss
+  file: null
+- host: api.sg.cosmose.co
+  path: /.well-known/oauth-authorization-server
+  status: 401
+  outcome: miss
+  file: null
+- host: api.sg.cosmose.co
+  path: /.well-known/api-catalog
+  status: 401
+  outcome: miss
+  file: null
+- host: api.sg.cosmose.co
+  path: /.well-known/ai-plugin.json
+  status: 401
+  outcome: miss
+  file: null
+- host: repo.cosmose.co
+  path: /.well-known/security.txt
+  status: 404
+  outcome: miss
+  reason: Nexus Repository Manager 404 page
+  file: null
+- host: repo.cosmose.co
+  path: /.well-known/agent-card.json
+  status: 404
+  outcome: miss
+  file: null
+- host: repo.cosmose.co
+  path: /.well-known/agent.json
+  status: 404
+  outcome: miss
+  file: null
+- host: repo.cosmose.co
+  path: /.well-known/openid-configuration
+  status: 404
+  outcome: miss
+  file: null
+- host: repo.cosmose.co
+  path: /.well-known/oauth-authorization-server
+  status: 404
+  outcome: miss
+  file: null
+- host: repo.cosmose.co
+  path: /.well-known/api-catalog
+  status: 404
+  outcome: miss
+  file: null
+- host: repo.cosmose.co
+  path: /.well-known/ai-plugin.json
+  status: 404
+  outcome: miss
+  file: null
+agent_card:
+  found: false
+  detail: >-
+    Probed /.well-known/agent-card.json and the legacy /.well-known/agent.json on all six hosts. No JSON object with
+    AgentCard shape was returned anywhere. Per the pipeline's search-only rule, no a2a/ artifact and no AgentCard
+    pointer were written.

@@ -1,0 +1,182 @@
+generated: '2026-08-11'
+method: derived
+source: openapi/cosmose-ai-deal-hunter-registration-api-openapi.yml
+status: candidate
+official_server: false
+pointer_emitted: false
+pointer_note: >-
+  NO `type: MCPServer` POINTER IS WIRED IN apis.yml, DELIBERATELY. Cosmose AI operates no MCP server. This file is a
+  derived candidate showing what one over the single public contract could expose; wiring the canonical pointer would
+  assert a surface the provider does not serve and would earn score for it. If Cosmose ever ships a real endpoint,
+  replace this file with the searched artifact and add the pointer then.
+search:
+  performed: '2026-08-11'
+  result: none
+  probes:
+  - url: https://api.sg.cosmose.co/.well-known/oauth-protected-resource
+    status: 401
+  - url: https://api.cosmose.co/.well-known/oauth-authorization-server
+    status: 401
+  - url: https://cosmose.ai/.well-known/ai-plugin.json
+    status: 200
+    outcome: miss
+    note: SPA soft-200, HTML shell
+  - url: https://cosmose.ai/llms.txt
+    status: 200
+    outcome: miss
+    note: SPA soft-200, HTML shell
+  registries_checked:
+  - GitHub organisation github.com/Cosmose (1 public repo, a CocoaPods spec index — no MCP server)
+  - npm search "cosmose" (0 results), "kaikai" (5 unrelated third-party packages)
+candidate_server:
+  transport: streamable-http
+  url: null
+  auth: bearer JWT, per authentication/cosmose-ai-authentication.yml
+  backing_api: Cosmose AI Deal Hunter Registration API
+  input_schema_note: >-
+    Each tool below would inherit the parameters and requestBody of the named operationId verbatim from
+    openapi/cosmose-ai-deal-hunter-registration-api-openapi.yml. No input schema is invented here.
+  scope_warning: >-
+    Most of this surface creates or destroys consumer accounts and personal records. A real MCP server over it would
+    need per-tool consequence gating before any of the write tools were exposed to an agent — the underlying contract
+    has no idempotency key, so a retried tool call cannot be deduplicated.
+candidate_tools:
+- tool: get_invitation_usage
+  category: invitations
+  rest: getInvitationUsage
+  method: GET
+  path: /v1/invitations
+  consequence: read
+- tool: get_invitation_timestamps
+  category: invitations
+  rest: getInvitationTimestamps
+  method: PUT
+  path: /v1/invitations
+  consequence: read
+  note: A read modelled as PUT in the source contract.
+- tool: create_invitation
+  category: invitations
+  rest: createInvitation
+  method: POST
+  path: /v1/invitations
+  consequence: write
+  quota: subject to the unpublished daily invitation limit (INVITATION_DAILY_LIMIT_EXCEEDED)
+- tool: get_confirmed_registration_count
+  category: registration
+  rest: getNumberOfConfirmedRegistrations
+  method: GET
+  path: /v1/registration/confirmed
+  consequence: read
+- tool: list_waiting_list_users
+  category: admin
+  rest: getWaitingListUsers
+  method: GET
+  path: /v1/registration-admin/waiting-list-users
+  consequence: read
+  sensitive: true
+  note: >-
+    Returns PageUserDto → UserDto, which the contract declares as carrying a `password` field. Would not be safe to
+    expose to an agent as published.
+- tool: approve_waiting_list_users
+  category: admin
+  rest: approveUsers
+  method: PUT
+  path: /v1/registration-admin/approval
+  consequence: write
+  sensitive: true
+- tool: issue_token
+  category: auth
+  rest: generateTokens
+  method: POST
+  path: /v2/token
+  consequence: write
+  sensitive: true
+- tool: register_user
+  category: onboarding
+  rest: register
+  method: POST
+  path: /v2/register
+  consequence: write
+- tool: confirm_registration
+  category: onboarding
+  rest: confirmRegistration_1
+  method: POST
+  path: /v2/confirm-registration
+  consequence: write
+- tool: register_kkn_user
+  category: onboarding
+  rest: register_1
+  method: POST
+  path: /v2/kkn-register
+  consequence: write
+- tool: confirm_kkn_registration
+  category: onboarding
+  rest: confirmRegistration
+  method: POST
+  path: /v2/kkn-confirm-registration
+  consequence: write
+- tool: register_without_code
+  category: registration
+  rest: registerNewUserWithoutCode
+  method: POST
+  path: /v1/registration
+  consequence: write
+- tool: join_waiting_list
+  category: registration
+  rest: registerNewUserWithoutCodeOnTheWaitingList
+  method: POST
+  path: /v1/registration/wait-list
+  consequence: write
+- tool: unsubscribe
+  category: registration
+  rest: unsubscribe
+  method: POST
+  path: /v1/registration/unsubscribe
+  consequence: write
+- tool: submit_merchant_lead
+  category: forms
+  rest: saveMerchantFormData
+  method: POST
+  path: /v1/merchants
+  consequence: write
+- tool: submit_contact_form
+  category: forms
+  rest: save
+  method: POST
+  path: /v1/contact-forms
+  consequence: write
+- tool: subscribe_newsletter
+  category: forms
+  rest: subscribeToNewsletter_1
+  method: POST
+  path: /v1/newsletter
+  consequence: write
+- tool: delete_user_account
+  category: privacy
+  rest: deleteUserAccount
+  method: DELETE
+  path: /v1/user-account
+  consequence: destructive
+  sensitive: true
+- tool: restore_user_account
+  category: privacy
+  rest: restoreUserAccount
+  method: PUT
+  path: /v1/user-account/restore
+  consequence: write
+  quota: capped by the unpublished MAX_RESETS_EXCEEDED limit
+excluded_operations:
+- operationId: registerReviewer
+  reason: App-store review harness, not a consumer capability.
+- operationId: generateTokens_1
+  reason: Undocumented internal issuer ("crucible") with no stated relationship to /v2/token.
+- operationId: saveSchool
+  reason: Campaign-specific form handler.
+- operationId: subscribeToNewsletter
+  reason: School-scoped duplicate of the newsletter subscription.
+- operationId: register_2
+  reason: Campaign-specific ("learn-to-code") form handler.
+coverage:
+  openapi_operations: 24
+  candidate_tools: 19
+  excluded: 5

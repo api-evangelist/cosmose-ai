@@ -1,0 +1,41 @@
+generated: '2026-08-11'
+method: generated
+source: openapi/cosmose-ai-deal-hunter-registration-api-openapi.yml
+note: >-
+  Packaged Agent Skills for the one Cosmose AI API that has a public machine-readable contract. Every operationId
+  referenced was grepped out of that contract; none is invented. Searched first for provider-published skills or an
+  AGENTS.md on cosmose.ai, kaikai.ai and github.com/Cosmose — none exist.
+skills:
+- name: cosmose-ai-invite-and-onboard-a-kaikai-user
+  file: cosmose-ai-invite-and-onboard-a-kaikai-user.md
+  api: Cosmose AI Deal Hunter Registration API
+  summary: >-
+    Invite-driven consumer onboarding — issue an invitation, register against it, confirm, and exchange for a bearer
+    token, with the waiting-list fallback and the admin approval step.
+  operations:
+  - createInvitation
+  - getInvitationUsage
+  - getInvitationTimestamps
+  - register
+  - register_1
+  - confirmRegistration
+  - confirmRegistration_1
+  - generateTokens
+  - registerNewUserWithoutCodeOnTheWaitingList
+  - approveUsers
+- name: cosmose-ai-erase-and-restore-a-user-account
+  file: cosmose-ai-erase-and-restore-a-user-account.md
+  api: Cosmose AI Deal Hunter Registration API
+  summary: >-
+    Right-to-erasure flow — delete a consumer account, unsubscribe separately, and restore against the undocumented
+    reset cap.
+  operations:
+  - deleteUserAccount
+  - restoreUserAccount
+  - unsubscribe
+not_written:
+- reason: >-
+    No skill was authored for Cosmose AI's actual commercial product — offline footfall, purchase-intent and
+    online-to-offline ad targeting. That surface has no public contract of any kind: no developer portal, no API
+    reference, no spec. The only Cosmose API a machine can read is the consumer registration backend, so that is the
+    only thing a skill can honestly be grounded in.

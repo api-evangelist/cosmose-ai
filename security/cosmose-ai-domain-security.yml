@@ -1,0 +1,26 @@
+generated: '2026-08-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: cosmose.ai
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Dec  1 23:59:59 2026 GMT
+  hsts: false
+- host: api.sg.cosmose.co
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 13 02:35:59 2026 GMT
+  hsts: null
+domains:
+- domain: cosmose.ai
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: false
+- domain: cosmose.co
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: none

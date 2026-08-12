@@ -1,0 +1,152 @@
+generated: '2026-08-11'
+method: derived
+source: openapi/cosmose-ai-deal-hunter-registration-api-openapi.yml
+note: >-
+  Cross-cutting runtime semantics, derived entirely from the provider's published contract and from live gateway
+  probes on 2026-08-11. Cosmose AI publishes no developer documentation, so there is no prose to cross-check any of
+  this against — where a convention is absent the honest reading is "the provider has not stated one", and that is
+  recorded as such rather than guessed.
+authentication:
+  style: bearer JWT, applied globally
+  detail: See authentication/cosmose-ai-authentication.yml
+  cross_reference: authentication/cosmose-ai-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  scope: null
+  retention: null
+  evidence: >-
+    No Idempotency-Key (or equivalent) parameter appears on any of the 24 operations, and no idempotency semantics are
+    described anywhere. This matters here more than usual: the surface is dominated by non-idempotent POSTs that
+    create durable side effects — POST /v2/register, POST /v2/kkn-register, POST /v1/invitations, POST /v1/merchants,
+    POST /v1/contact-forms, POST /v1/newsletter. A retried mobile registration on a flaky network has no
+    provider-supplied way to be deduplicated; the contract's own USER_ALREADY_REGISTERED / EMAIL_ALREADY_TAKEN error
+    codes are the de facto collision handling.
+  natural_idempotency:
+  - operationId: restoreUserAccount
+    method: PUT
+    note: PUT semantics, but capped by MAX_RESETS_EXCEEDED, so not freely repeatable.
+  - operationId: approveUsers
+    method: PUT
+pagination:
+  supported: true
+  style: spring-data page/size/sort
+  applies_to:
+  - operationId: getWaitingListUsers
+    path: /v1/registration-admin/waiting-list-users
+  request:
+    in: query
+    parameter: pageable
+    parameter_note: >-
+      DEFECT: the contract declares a single required query parameter named `pageable` whose schema is the OBJECT
+      `Pageable` {page, size, sort[]}. Spring deserialises this as three flat query parameters
+      (?page=0&size=20&sort=field,dir), but the OpenAPI says "one object-valued query parameter". A client generated
+      from this document will serialise it wrongly. It is also marked `required: true` with no defaults exposed.
+    fields:
+    - name: page
+      type: integer
+      minimum: 0
+    - name: size
+      type: integer
+      minimum: 1
+    - name: sort
+      type: array of string
+  response:
+    envelope: PageUserDto
+    fields:
+    - content
+    - totalElements
+    - totalPages
+    - number
+    - size
+    - numberOfElements
+    - first
+    - last
+    - empty
+    - sort
+    - pageable
+  cursor_support: false
+  default_page_size: not published
+  max_page_size: not published
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  customer_defined_metadata: false
+request_tracing:
+  request_id_header: null
+  correlation_id: null
+  detail: >-
+    No request-id or trace header is declared on any operation and none is returned in the ErrorDto envelope. An agent
+    or an operator debugging a 400 has nothing to quote back to support. The only caller-supplied correlator is
+    `Installation-Id`, a header on POST /v2/token that identifies the app installation, not the request.
+versioning:
+  style: path prefix
+  detail: >-
+    Two path versions coexist in one document — /v1/* (17 operations) and /v2/* (5 operations) — with no statement of
+    which is current, whether /v1 is deprecated, or how a migration would be signalled. The document's own
+    info.version is the springdoc default `v0`, which matches neither. No media-type or header versioning.
+  versions_observed:
+  - v1
+  - v2
+  deprecation_signalling: none
+  cross_reference: lifecycle/cosmose-ai-lifecycle.yml
+error_envelope:
+  shape: '{errorCode: <enum>, message: <string>}'
+  rfc9457: false
+  status_codes_declared:
+  - 200
+  - 400
+  - 403
+  - 404
+  status_codes_observed_but_undeclared:
+  - 401
+  cross_reference: errors/cosmose-ai-problem-types.yml
+rate_limit_signalling:
+  headers_documented: none
+  headers_observed: none
+  detail: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header is declared in the contract, and none was returned on the
+    anonymous 200 and 401 responses observed on 2026-08-11. One quota is provably enforced — the enum member
+    INVITATION_DAILY_LIMIT_EXCEEDED — but it surfaces as a 400 with no numeric budget, no window and no reset hint,
+    so a client cannot pace itself.
+  cross_reference: rate-limits/cosmose-ai-rate-limits.yml
+content_negotiation:
+  request_media_types:
+  - application/json
+  response_media_types:
+  - '*/*'
+  detail: >-
+    Requests are declared application/json; every response is declared under the wildcard `*/*`. The asymmetry is a
+    springdoc default the provider did not override.
+naming:
+  paths: kebab-case
+  json_fields: mixed
+  json_fields_detail: >-
+    Inconsistent within a single document — TokenInfo and RegisterDto use snake_case (`access_token`,
+    `refresh_token`, `expires_in`, `phone_number`) while UserDto, ContactForm and CreateMerchantRequestDto use
+    camelCase (`firstName`, `businessEmail`, `promoCode`). Query parameters mix both (`refresh_token`, `grant_type`,
+    `phone_numbers` alongside `pageable`).
+  operation_ids: >-
+    Unique but collision-suffixed by the generator — register_1, register_2, confirmRegistration_1, generateTokens_1,
+    subscribeToNewsletter_1.
+data_protection:
+  right_to_erasure:
+    supported: true
+    operations:
+    - operationId: deleteUserAccount
+      method: DELETE
+      path: /v1/user-account
+    - operationId: restoreUserAccount
+      method: PUT
+      path: /v1/user-account/restore
+    tag: forget-me-controller
+    detail: >-
+      A first-class delete/restore pair for user accounts, tagged `forget-me-controller` — a GDPR-shaped capability
+      exposed as API operations rather than only as a support process. Restore is capped (MAX_RESETS_EXCEEDED); the
+      cap value and the retention window between delete and permanent erasure are not published.
+  unsubscribe:
+    supported: true
+    operationId: unsubscribe
+    path: /v1/registration/unsubscribe

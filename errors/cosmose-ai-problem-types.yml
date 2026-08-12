@@ -1,0 +1,121 @@
+generated: '2026-08-11'
+method: derived
+source: openapi/cosmose-ai-deal-hunter-registration-api-openapi.yml
+format: proprietary
+rfc9457: false
+note: >-
+  Derived from the provider's published OpenAPI. Cosmose AI publishes no error reference page — there is no developer
+  portal to hold one — so titles and remediation below are read off the enum values and the operations that can raise
+  them, not off provider prose. Nothing here is invented.
+envelope:
+  schema: ErrorDto
+  media_type: '*/*'
+  media_type_note: >-
+    The contract declares every response body under the wildcard `*/*` media type rather than `application/json`,
+    so a generated client cannot content-negotiate. This is a springdoc default the provider never overrode.
+  fields:
+  - name: errorCode
+    type: string
+    enumerated: true
+    detail: Machine-readable, closed enum of 9 values. Good practice — this is the strongest part of the contract.
+  - name: message
+    type: string
+    detail: Human-readable text. No `type` URI, no `instance`, no correlation/request id.
+  missing_for_rfc9457:
+  - type
+  - title
+  - status
+  - detail
+  - instance
+status_codes:
+- status: 400
+  reason: Bad Request
+  declared_on_operations: 24
+  body: ErrorDto
+- status: 403
+  reason: Forbidden
+  declared_on_operations: 24
+  body: ErrorDto
+- status: 404
+  reason: Not Found
+  declared_on_operations: 24
+  body: ErrorDto
+- status: 401
+  reason: Unauthorized
+  declared_on_operations: 0
+  body: 'gateway envelope: {"error": "...", "error_description": "..."}'
+  gap: true
+  detail: >-
+    OBSERVED BUT UNDECLARED. The document applies `bearerAuth` globally yet never declares a 401 response, while the
+    gateway demonstrably returns HTTP 401 with a *different* envelope shape (`error`/`error_description`, not
+    `errorCode`/`message`) — probed on api.cosmose.co/ and api.sg.cosmose.co/ on 2026-08-11. The first failure any
+    caller hits is the one the contract does not describe, and it does not match the documented error schema.
+- status: 5xx
+  declared_on_operations: 0
+  gap: true
+  detail: No server-error response is declared on any operation.
+problem_types:
+- code: BAD_REQUEST
+  http_status: 400
+  title: Request failed validation
+  remediation: >-
+    Check the constrained fields — phone numbers must match `^\+?[\d \-]{8,17}$`, `language` must be one of
+    en/es/pl/it/oo, and UserDto requires age, city, country, email, firstName, language, lastName, password and
+    promoCode.
+- code: CODE_NOT_FOUND
+  http_status: 404
+  title: Invitation or promo code does not exist
+  raised_by:
+  - register
+  - confirmRegistration
+  - registerNewUserWithoutCode
+  remediation: Re-issue an invitation via POST /v1/invitations, or register onto the waiting list instead.
+- code: CODE_EXCEEDED
+  http_status: 400
+  title: Invitation code has been redeemed the maximum number of times
+  remediation: Issue a new invitation; the existing code is exhausted.
+- code: INVITATION_DAILY_LIMIT_EXCEEDED
+  http_status: 400
+  title: Caller has issued more invitations than the per-day allowance
+  raised_by:
+  - createInvitation
+  remediation: >-
+    Retry the following day. The allowance value itself is NOT published anywhere — see
+    rate-limits/cosmose-ai-rate-limits.yml; this enum member is the only public evidence that a daily quota exists.
+- code: USER_ALREADY_REGISTERED
+  http_status: 400
+  title: An account already exists for this identity
+  raised_by:
+  - register
+  - register_1
+  - registerNewUserWithoutCode
+  remediation: Move to the token flow (POST /v2/token) rather than re-registering.
+- code: USER_NOT_FOUND
+  http_status: 404
+  title: No account matches the supplied identity
+  raised_by:
+  - deleteUserAccount
+  - restoreUserAccount
+  - unsubscribe
+  remediation: Verify the installation id / phone number used to register.
+- code: EMAIL_ALREADY_TAKEN
+  http_status: 400
+  title: Email address is already bound to another account
+  remediation: Use a different address or recover the existing account.
+- code: MAX_RESETS_EXCEEDED
+  http_status: 400
+  title: Account has been reset/restored more times than allowed
+  raised_by:
+  - restoreUserAccount
+  remediation: >-
+    No published recovery path. The forget-me delete/restore pair (DELETE /v1/user-account, PUT
+    /v1/user-account/restore) is capped, and the cap is not documented.
+- code: FORBIDDEN
+  http_status: 403
+  title: Caller is authenticated but not permitted to perform this operation
+  raised_by:
+  - approveUsers
+  - getWaitingListUsers
+  remediation: >-
+    The admin operations under /v1/registration-admin/* require a privileged token. There is no scope or role model
+    in the contract to say which one — see authentication/cosmose-ai-authentication.yml.

@@ -1,0 +1,88 @@
+overlay: 1.0.0
+x-generated: '2026-08-11'
+x-method: generated
+x-source: openapi/_original/cosmose-ai-deal-hunter-registration-api.json
+info:
+  title: API Evangelist enhancements for the Cosmose AI Deal Hunter Registration API
+  version: 1.0.0
+  description: >-
+    Captures every change API Evangelist applied on top of the verbatim springdoc document harvested from
+    https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs on 2026-08-11. The original is preserved
+    untouched at openapi/_original/cosmose-ai-deal-hunter-registration-api.json; applying this overlay to it
+    reproduces openapi/cosmose-ai-deal-hunter-registration-api-openapi.yml. No operation, schema, parameter or
+    response was invented — the deltas below are metadata only.
+extends: ../openapi/_original/cosmose-ai-deal-hunter-registration-api.json
+actions:
+  - target: $.info
+    description: >-
+      Upstream ships the springdoc defaults ("OpenAPI definition" / version "v0") with no description. Replaced the
+      title with the real service name observed on the gateway path, and added a description recording provenance.
+    update:
+      title: Cosmose AI Deal Hunter Registration API
+      description: >-
+        Public registration, onboarding, invitation and account-lifecycle API behind Cosmose AI's KaiKai / Deal Hunter
+        consumer app and its merchant and school lead-capture forms.
+      x-harvested-from: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
+  - target: $.servers
+    description: >-
+      HARD DEFECT IN THE PUBLISHED CONTRACT, not a preference. Upstream advertises
+      `http://deal-hunter-registration-api/deal-hunter-registration-api` — the internal Kubernetes service DNS name
+      springdoc inferred from the request it saw, over plaintext http, with the context path duplicated. That host does
+      not resolve for any consumer outside the cluster, so a client generated straight from the published document
+      cannot make a single call. Replaced with the gateway origin the document was actually served from and confirmed
+      reachable. This is the single highest-value fix available on this spec and it belongs upstream: setting
+      springdoc's `server-url` (or a `@OpenAPIDefinition(servers=...)`) would fix it at the source for every consumer.
+    update:
+      - url: https://api.sg.cosmose.co/deal-hunter-registration-api
+        description: Singapore production gateway (observed reachable, HTTP 200 on /v3/api-docs)
+  - target: $
+    description: >-
+      Recorded the harvest evidence — fetch date, exact URL, HTTP status and content type — so the provenance of this
+      copy is checkable without re-probing.
+    update:
+      x-evidence:
+        fetched: '2026-08-11'
+        url: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
+        http_status: 200
+        content_type: application/json
+x-gaps-for-the-provider:
+  - id: no-operation-summaries
+    detail: >-
+      All 24 operations carry an operationId and a tag but zero `summary` and zero `description`. springdoc emits what
+      the Java code carries; adding @Operation(summary=..) is a one-line-per-method fix.
+    affected_operations: 24
+  - id: springdoc-controller-tags
+    detail: >-
+      Tags are raw Spring bean names (`forget-me-controller`, `kkn-onboarding-controller`, `crucible-token-controller`)
+      rather than consumer-facing resource names, and no top-level `tags[]` block declares or describes them.
+    affected_tags:
+      - forget-me-controller
+      - registration-admin-controller
+      - invitation-controller
+      - token-controller
+      - onboarding-controller
+      - kkn-onboarding-controller
+      - crucible-token-controller
+      - school-controller
+      - registration-controller
+      - newsletter-controller
+      - merchant-controller
+      - learn-to-code-controller
+      - contact-form-controller
+  - id: collision-suffixed-operationids
+    detail: >-
+      Four operationIds are springdoc collision suffixes rather than names — `register_1`, `register_2`,
+      `confirmRegistration_1`, `generateTokens_1`, `subscribeToNewsletter_1`. They are unique, so the contract is
+      valid, but a generated SDK exposes methods no reader can identify.
+  - id: wildcard-response-media-type
+    detail: >-
+      Every response body is declared under the `*/*` media type instead of `application/json`, which is what the
+      service actually returns. Generated clients cannot negotiate content, and tooling cannot tell JSON from anything
+      else.
+  - id: no-examples
+    detail: No request or response `example`/`examples` anywhere in the document.
+  - id: no-401-declared
+    detail: >-
+      The document declares 200/400/403/404 on all 24 operations and applies `bearerAuth` globally, but never declares
+      401 — even though the sibling gateway hosts (api.cosmose.co, api.sg.cosmose.co root) demonstrably answer
+      `{"error":"unauthorized"}` with HTTP 401. The contract does not describe the failure a caller hits first.

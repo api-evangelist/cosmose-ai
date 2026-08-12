@@ -1,0 +1,149 @@
+generated: '2026-08-11'
+method: searched
+source: https://github.com/Cosmose/pod-specs
+note: >-
+  Searched npm, PyPI, Maven Central, RubyGems, crates.io, NuGet, pkg.go.dev, Packagist and the CocoaPods trunk for
+  first-party Cosmose AI / KaiKai client libraries, then found the real distribution: a first-party PRIVATE CocoaPods
+  spec repository under the provider's own GitHub organisation. Nothing is published to any public package registry
+  — the four packages below resolve their binaries from an authenticated Nexus at repo.cosmose.co, so `registry:
+  cdn`-style version reading applies: the version is read from the pinned artifact URL inside each podspec, and the
+  publish date from the git commit that added it.
+registries_searched:
+- registry: npm
+  query: cosmose
+  results: 0
+  url: https://registry.npmjs.org/-/v1/search?text=cosmose
+- registry: npm
+  query: kaikai
+  results: 0
+  note: Five unrelated third-party packages; none authored by Cosmose.
+- registry: pypi
+  query: cosmose
+  status: 404
+- registry: maven-central
+  query: cosmose
+  results: 0
+- registry: cocoapods-trunk
+  query: Cosmose, CosmoseSDK, Kaikai
+  results: 0
+  note: 'All three return {"error":"No pod found with the specified name."} — the pods are not on the public trunk.'
+- registry: github-search
+  query: cosmose
+  results: 0
+  note: 20 repositories matched the string; none belong to Cosmose Inc.
+packages:
+- name: CosmoseSDK
+  language: swift
+  platform: ios
+  ecosystem: cocoapods
+  registry: private
+  official: true
+  version: 2.0.18
+  published: '2021-12-09'
+  version_source: >-
+    Pinned artifact URL in the podspec —
+    https://repo.cosmose.co/repository/ios-sdk-releases/co/cosmose/CosmoseSDK/CosmoseSDK_2.0.18.xcframework.zip
+  published_source: >-
+    Date of the commit that added CosmoseSDK/2.0.18 to https://github.com/Cosmose/pod-specs
+  spec: https://raw.githubusercontent.com/Cosmose/pod-specs/HEAD/CosmoseSDK/2.0.18/CosmoseSDK.podspec.json
+  homepage: https://cosmose.ai
+  license: Proprietary
+  author: Cosmose Inc. <support@cosmose.co>
+  minimum_platform: iOS 9.0
+  distribution: vendored xcframework, sha256-pinned, fetched over HTTPS from repo.cosmose.co
+  dependencies:
+  - Protobuf ~> 3.17
+  description: >-
+    "Cosmose SDK is a library used to track user location along with additional information." This is the data-
+    collection SDK partner apps embed — the supply side of Cosmose's offline-behaviour dataset — not a client for
+    calling a Cosmose API.
+  decay_note: >-
+    Latest release is 2021-12-09, four years and eight months before this pass. It still targets iOS 9.0 and excludes
+    arm64 on the simulator, which means it predates Apple-silicon simulator support.
+- name: CosmoseNotificationsSDK
+  language: swift
+  platform: ios
+  ecosystem: cocoapods
+  registry: private
+  official: true
+  version: 2.0.18
+  published: '2021-12-09'
+  version_source: >-
+    Pinned artifact URL —
+    https://repo.cosmose.co/repository/ios-sdk-releases/co/cosmose/CosmoseNotificationsSDK/CosmoseNotificationsSDK_2.0.18.xcframework.zip
+  spec: https://raw.githubusercontent.com/Cosmose/pod-specs/HEAD/CosmoseNotificationsSDK/2.0.18/CosmoseNotificationsSDK.podspec.json
+  license: Proprietary
+  author: Cosmose Inc. <support@cosmose.co>
+  minimum_platform: iOS 10.0
+  dependencies:
+  - CosmoseSDK ~> 2.0
+  description: '"Cosmose Notifications SDK is a library used to process real-time push notifications."'
+- name: HartAiSdk
+  language: swift
+  platform: ios
+  ecosystem: cocoapods
+  registry: private
+  official: true
+  version: 1.0.0-preprod
+  published: '2024-09-05'
+  version_source: >-
+    Pinned artifact URL —
+    https://repo.cosmose.co/repository/ios-sdk-releases/org/hartai/sdk/HartAiSdk/HartAiSdk_1.0.0-preprod.xcframework.zip
+  spec: https://raw.githubusercontent.com/Cosmose/pod-specs/HEAD/HartAiSdk/1.0.0-preprod/HartAiSdk.podspec.json
+  license: Proprietary
+  author: Cosmose Inc. <support@cosmose.co>
+  minimum_platform: iOS 13.0
+  dependencies:
+  - HartAiNativePreferencesSdk ~> 1.0.0
+  description: >-
+    "HART AI is a secure data container where the user's preferences, statistics, and interactions are stored in an
+    encrypted version. Everything is confirmed on the blockchain so nobody will be able to change it or deny previous
+    actions." Published under the org/hartai namespace but authored by Cosmose Inc. — the blockchain-side product
+    line that followed the NEAR Foundation investment.
+  decay_note: >-
+    The newest first-party package Cosmose has published anywhere is still tagged `-preprod` and has not moved since
+    2024-09-05. A pre-production build is the current state of the art of this SDK line.
+- name: HartAiNativePreferencesSdk
+  language: swift
+  platform: ios
+  ecosystem: cocoapods
+  registry: private
+  official: true
+  version: 1.0.0
+  published: '2024-09-05'
+  version_source: >-
+    Pinned artifact URL —
+    https://repo.cosmose.co/repository/ios-sdk-releases/org/hartai/sdk/HartAiNativePreferencesSdk/HartAiNativePreferencesSdk_1.0.0.xcframework.zip
+  spec: https://raw.githubusercontent.com/Cosmose/pod-specs/HEAD/HartAiNativePreferencesSdk/1.0.0/HartAiNativePreferencesSdk.podspec.json
+  license: Proprietary
+  author: Cosmose Inc. <support@cosmose.co>
+  minimum_platform: iOS 13.0
+  dependencies:
+  - GTMSessionFetcher ~> 2.3.0
+  - GoogleDataTransport ~> 9.4.1
+  - GoogleToolboxForMac ~> 2.3.2
+  - GoogleUtilities ~> 7.13.3
+  - PromisesObjC ~> 2.4.0
+  - Protobuf ~> 3.27.1
+  - SSZipArchive ~> 2.4.3
+  description: '"HART AI Preferences extension."'
+not_first_party:
+- name: stahn/cosmose-ios-sdk
+  url: https://github.com/stahn/cosmose-ios-sdk
+  description: '"iOS SDK for Cosmose app partners"'
+  last_pushed: '2014-03-17'
+  reason: >-
+    Personal account, not the Cosmose organisation, and last touched in 2014. Recorded so a later run does not mistake
+    it for the official SDK.
+gaps:
+- >-
+  No Android SDK is published anywhere public, despite the product being an in-app location SDK whose reach claim
+  ("1B people") is necessarily dominated by Android in the Asian markets Cosmose sells.
+- >-
+  No server-side client library exists in any language for the API surface that does have a public contract.
+- >-
+  The binary host repo.cosmose.co/repository/ios-sdk-releases/ returns HTTP 401 on directory listing, so no consumer
+  can enumerate available versions; the GitHub spec repo is the only public version index.
+- >-
+  Every package is `license: Proprietary` with an empty license text, so a consumer evaluating the SDK has no terms to
+  read before embedding a location-tracking library in their own app.

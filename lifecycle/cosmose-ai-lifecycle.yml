@@ -1,0 +1,89 @@
+generated: '2026-08-11'
+method: derived
+source: openapi/cosmose-ai-deal-hunter-registration-api-openapi.yml
+note: >-
+  Derived from the published contract plus live probes on 2026-08-11. Every "published: false" below is a recorded
+  absence backed by a probe, not an assumption.
+versioning:
+  scheme: path prefix
+  versions_in_service:
+  - v1
+  - v2
+  detail: >-
+    /v1 and /v2 coexist in one document with no statement of which is current. The five /v2 operations (register,
+    register-reviewer, confirm-registration, kkn-register, kkn-confirm-registration, token, crucible-token) look like
+    successors to the /v1 registration operations, but nothing in the contract marks the /v1 ones deprecated.
+  document_version: v0
+  document_version_note: springdoc default, never overridden; matches neither path version.
+  policy_published: false
+deprecation:
+  policy_published: false
+  deprecated_operations: 0
+  deprecated_operations_detail: >-
+    Not one of the 24 operations carries `deprecated: true`, despite two path versions running side by side.
+  sunset_header: not documented
+  deprecation_header: not documented
+  rfc8594_support: unknown
+  probes:
+  - url: https://cosmose.ai/
+    status: 200
+    note: Angular SPA; router config contains no deprecation, changelog, developer or docs route.
+status_page:
+  published: false
+  probes:
+  - url: https://status.cosmose.ai
+    status: 0
+    note: DNS does not resolve.
+  - url: https://status.cosmose.co
+    status: 0
+    note: DNS does not resolve.
+  - url: https://cosmose.statuspage.io
+    status: 200
+    note: >-
+      SOFT HIT, NOT A STATUS PAGE — redirects to Atlassian's Statuspage marketing site
+      (<title>Real-Time Incident Communication with Statuspage | Atlassian</title>). No tenant exists. Recorded so a
+      later run does not re-credit this 200.
+  - url: https://api.sg.cosmose.co/deal-hunter-registration-api/actuator/health
+    status: 404
+  - url: https://api.cosmose.co/actuator
+    status: 401
+sla:
+  published: false
+  detail: No SLA, uptime commitment or support-response commitment is published on any public Cosmose AI property.
+changelog:
+  published: false
+  detail: >-
+    No changelog, release-notes or "what's new" surface exists. The Angular router on cosmose.ai declares 20 routes
+    (home, about-us, blog, careers, privacy-policy, opt-out, web3, several campaign landing pages) and none of them
+    is a developer or release surface.
+support:
+  published_channels:
+  - channel: email
+    value: support@cosmose.co
+    source: >-
+      Author contact declared in the first-party CocoaPods podspecs at
+      https://raw.githubusercontent.com/Cosmose/pod-specs/HEAD/CosmoseSDK/2.0.18/CosmoseSDK.podspec.json
+  help_center: false
+  community: false
+  developer_forum: false
+release_activity:
+  detail: >-
+    The only dated, provider-published release signal available is the CocoaPods spec repository. It shows the
+    consumer-tracking SDK line frozen and a newer product line started and then also stopped.
+  signals:
+  - artifact: CosmoseSDK
+    latest_version: 2.0.18
+    last_published: '2021-12-09'
+  - artifact: CosmoseNotificationsSDK
+    latest_version: 2.0.18
+    last_published: '2021-12-09'
+  - artifact: HartAiNativePreferencesSdk
+    latest_version: 1.0.0
+    last_published: '2024-09-05'
+  - artifact: HartAiSdk
+    latest_version: 1.0.0-preprod
+    last_published: '2024-09-05'
+    note: >-
+      The newest first-party package Cosmose has published anywhere is still marked `-preprod` and is nearly two years
+      old as of this pass.
+  cross_reference: packages/cosmose-ai-packages.yml

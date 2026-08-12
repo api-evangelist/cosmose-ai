@@ -1,0 +1,46 @@
+generated: '2026-08-11'
+method: probed
+source: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
+limit_count: 0
+limits: []
+detail: >-
+  No rate limits are published. Cosmose AI has no developer documentation in which to publish them, and the one public
+  contract declares no limit-related parameters, responses or headers. One quota is provably enforced but never
+  quantified: the ErrorDto enum includes INVITATION_DAILY_LIMIT_EXCEEDED, which proves a per-day invitation allowance
+  exists — but the number, the window boundary, the reset time and the scope (per installation? per account? per
+  token?) are all unstated, and it surfaces as HTTP 400 rather than 429. A client cannot pace itself against a budget
+  it cannot read.
+headers:
+  documented: []
+  observed: []
+  probe_note: >-
+    Response headers were inspected on the anonymous 200 from
+    https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs and on the 401 from https://api.cosmose.co/ on
+    2026-08-11. Neither carried X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, the RFC-draft
+    RateLimit/RateLimit-Policy fields, or Retry-After.
+exhaustion:
+  status_code: null
+  documented: false
+  note: >-
+    429 is not declared on any of the 24 operations. The declared status set is 200/400/403/404 only — see
+    errors/cosmose-ai-problem-types.yml.
+inferred_quotas:
+- name: invitation daily limit
+  evidence: 'ErrorDto.errorCode enum member INVITATION_DAILY_LIMIT_EXCEEDED'
+  raised_by: createInvitation (POST /v1/invitations)
+  limit: not published
+  window: day (implied by the name)
+  scope: not published
+  http_status: 400
+- name: account restore cap
+  evidence: 'ErrorDto.errorCode enum member MAX_RESETS_EXCEEDED'
+  raised_by: restoreUserAccount (PUT /v1/user-account/restore)
+  limit: not published
+  window: not published
+  scope: per account
+  http_status: 400
+evidence:
+- url: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
+  status: 200
+- url: https://api.cosmose.co/
+  status: 401

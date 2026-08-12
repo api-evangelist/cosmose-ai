@@ -1,0 +1,144 @@
+generated: '2026-08-11'
+method: derived
+source: openapi/cosmose-ai-deal-hunter-registration-api-openapi.yml
+note: >-
+  Entity graph derived from components.schemas $ref edges and id-reference fields in the provider's published
+  OpenAPI. Cosmose AI publishes no object reference, so there are no documented id prefixes or resource URIs to
+  enrich this with. Scope is the Deal Hunter registration service only — the analytics/adtech core that Cosmose sells
+  to brands is not represented by any public contract.
+scope:
+  service: Deal Hunter Registration API
+  schemas: 27
+  entities: 8
+  transfer_objects: 19
+identifiers:
+  documented_prefixes: none
+  keys_observed:
+  - field: id
+    format: uuid
+    on: ContactForm
+    note: The only uuid-typed identifier in the whole document.
+  - field: Installation-Id
+    location: header
+    on: POST /v2/token
+    note: >-
+      The de facto primary key of the consumer graph. It appears as a request header on token issuance and as the
+      grouping key of InvitationsByInstallationId, so an installation — not a user id — is what invitations and
+      tokens hang off. No schema ever declares it as a field, so its type and format are unstated.
+  - field: promoCode
+    on: UserDto
+  - field: phone_number
+    on: RegisterDto
+    pattern: '^\+?[\d \-]{8,17}$'
+  - field: email
+    on: UserDto, ContactForm, CreateMerchantRequestDto (as businessEmail), SubscribeDto
+entities:
+- name: User
+  schema: UserDto
+  description: >-
+    A KaiKai consumer account. Required fields age, city, country, email, firstName, language, lastName, password and
+    promoCode. `language` is constrained to ^(en|es|pl|it|oo)$.
+  privacy_note: >-
+    UserDto carries a plaintext `password` string field as a RESPONSE property — UserDto is the element type of
+    PageUserDto, which is returned by the admin operation GET /v1/registration-admin/waiting-list-users. The contract
+    as published states that listing waiting-list users returns their passwords. Whether the service actually
+    populates it cannot be tested without credentials, but the contract says it does, and that is the contract
+    consumers and reviewers read.
+- name: Installation
+  schema: null
+  description: >-
+    Implicit entity. Never declared as a schema, but referenced by the Installation-Id header and by
+    InvitationsByInstallationId. Everything in the invitation and token surface is keyed on it.
+- name: Invitation
+  schema: InvitationDto
+  description: An invitation carrying a localizedMessage, created via POST /v1/invitations.
+- name: Token
+  schema: TokenInfo
+  description: access_token / refresh_token / type / expires_in pair issued by /v2/token and /v2/crucible-token.
+- name: Merchant
+  schema: CreateMerchantRequestDto
+  description: >-
+    Merchant lead captured from the kaikai.ai merchant-signup form — firstName, lastName, phoneNumber,
+    businessEmail, website, businessType, comment, sourceUrl. A lead record, not a transacting merchant account.
+- name: School
+  schema: CreateSchoolDto
+  description: School record created by POST /v1/schools, with its own newsletter subscription endpoint.
+- name: ContactForm
+  schema: ContactForm
+  description: >-
+    Contact submission with a uuid id and a server-set createdTime. The only entity in the document with both an
+    identifier and a timestamp — i.e. the only one modelled as a persisted resource rather than a request payload.
+- name: NewsletterSubscription
+  schema: SubscribeDto
+  description: Newsletter subscription created by POST /v1/newsletter and POST /v1/schools/newsletter.
+relationships:
+- from: PageUserDto
+  to: UserDto
+  type: has_many
+  via: content[]
+  evidence: $ref
+- from: PageUserDto
+  to: PageableObject
+  type: has_one
+  via: pageable
+  evidence: $ref
+- from: PageUserDto
+  to: SortObject
+  type: has_many
+  via: sort[]
+  evidence: $ref
+- from: InvitationsByInstallationId
+  to: Installation
+  type: belongs_to
+  via: installation id
+  evidence: schema name
+- from: InvitationUsageDto
+  to: Invitation
+  type: belongs_to
+  via: invitation
+  evidence: naming
+- from: Invitation
+  to: Installation
+  type: belongs_to
+  via: Installation-Id
+  evidence: grouping in InvitationsByInstallationId
+- from: Token
+  to: Installation
+  type: belongs_to
+  via: Installation-Id header on POST /v2/token
+  evidence: parameter
+- from: School
+  to: NewsletterSubscription
+  type: has_many
+  via: POST /v1/schools/newsletter
+  evidence: path nesting
+orphan_schemas:
+  detail: >-
+    Request/response DTOs with no inbound or outbound $ref — flat payloads rather than a modelled graph.
+  schemas:
+  - ErrorDto
+  - RestoreRequest
+  - ApproveUsersDto
+  - InvitationUsageRequestDto
+  - InvitationTimestampDto
+  - RegisterDto
+  - RegisterReviewerRequest
+  - RegisterConfirmResponse
+  - RegisterConfirmRequest
+  - CreateSchoolDto
+  - SubscribeDto
+  - RegisterNewUserNoCodeDto
+  - UserRegisteredDto
+  - UnsubscribeDto
+  - ConfirmedUsersDto
+  - InvitationRequestDto
+observations:
+- >-
+  There is no GET-by-id operation for any entity. The service is write-mostly: 19 of 24 operations are POST/PUT/DELETE
+  and the only three reads are an invitation-usage lookup, a confirmed-registration counter, and the admin
+  waiting-list page. Nothing is addressable as a resource, so this is an RPC-shaped form-and-onboarding backend
+  wearing REST paths, not a resource API.
+- >-
+  Six of the 24 operations (schools, newsletter, learn-to-code, contact forms, merchants) are marketing-site form
+  handlers that happen to share a deployment with the consumer identity service. They are unrelated domains in one
+  contract.

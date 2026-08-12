@@ -1,0 +1,1336 @@
+openapi: 3.0.1
+info:
+  title: Cosmose AI Deal Hunter Registration API
+  description: Public registration, onboarding, invitation and account-lifecycle API behind Cosmose AI's KaiKai / Deal Hunter
+    consumer app and its merchant and school lead-capture forms. Harvested verbatim from the provider's live springdoc endpoint
+    at https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs; the only change in this refined copy is the servers[]
+    block, which upstream advertises the internal cluster service name http://deal-hunter-registration-api/deal-hunter-registration-api
+    instead of the reachable public gateway. See overlays/cosmose-ai-deal-hunter-registration-api-overlay.yaml for the exact
+    delta.
+  version: v0
+  x-harvested-from: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
+  x-upstream-info:
+    title: OpenAPI definition
+    version: v0
+servers:
+- url: https://api.sg.cosmose.co/deal-hunter-registration-api
+  description: Singapore production gateway (observed reachable, HTTP 200 on /v3/api-docs)
+security:
+- bearerAuth: []
+paths:
+  /v1/user-account/restore:
+    put:
+      tags:
+      - forget-me-controller
+      operationId: restoreUserAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestoreRequest'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+  /v1/registration-admin/approval:
+    put:
+      tags:
+      - registration-admin-controller
+      operationId: approveUsers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApproveUsersDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+  /v1/invitations:
+    get:
+      tags:
+      - invitation-controller
+      operationId: getInvitationUsage
+      parameters:
+      - name: Installation-Id
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvitationUsageDto'
+    put:
+      tags:
+      - invitation-controller
+      operationId: getInvitationTimestamps
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvitationUsageRequestDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvitationsByInstallationId'
+    post:
+      tags:
+      - invitation-controller
+      operationId: createInvitation
+      parameters:
+      - name: Installation-Id
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Number-Prefix
+        in: header
+        required: false
+        schema:
+          type: string
+          default: '+65'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvitationRequestDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvitationDto'
+  /v2/token:
+    post:
+      tags:
+      - token-controller
+      operationId: generateTokens
+      parameters:
+      - name: Installation-Id
+        in: header
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: refresh_token
+        in: query
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: scope
+        in: query
+        required: false
+        schema:
+          type: string
+          default: kaikai
+      - name: grant_type
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TokenInfo'
+  /v2/register:
+    post:
+      tags:
+      - onboarding-controller
+      operationId: register
+      parameters:
+      - name: Operating-System
+        in: header
+        required: false
+        schema:
+          type: string
+      - name: Installation-Id
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: App-Version
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+  /v2/register-reviewer:
+    post:
+      tags:
+      - onboarding-controller
+      operationId: registerReviewer
+      parameters:
+      - name: Operating-System
+        in: header
+        required: false
+        schema:
+          type: string
+      - name: Installation-Id
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterReviewerRequest'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RegisterConfirmResponse'
+  /v2/kkn-register:
+    post:
+      tags:
+      - kkn-onboarding-controller
+      operationId: register_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+  /v2/kkn-confirm-registration:
+    post:
+      tags:
+      - kkn-onboarding-controller
+      operationId: confirmRegistration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterConfirmRequest'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RegisterConfirmResponse'
+  /v2/crucible-token:
+    post:
+      tags:
+      - crucible-token-controller
+      operationId: generateTokens_1
+      parameters:
+      - name: Api-Key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: user_id
+        in: query
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: refresh_token
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: grant_type
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TokenInfo'
+  /v2/confirm-registration:
+    post:
+      tags:
+      - onboarding-controller
+      operationId: confirmRegistration_1
+      parameters:
+      - name: Installation-Id
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterConfirmRequest'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RegisterConfirmResponse'
+  /v1/schools:
+    post:
+      tags:
+      - school-controller
+      operationId: saveSchool
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSchoolDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+  /v1/schools/newsletter:
+    post:
+      tags:
+      - school-controller
+      operationId: subscribeToNewsletter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribeDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+      deprecated: true
+  /v1/registration:
+    post:
+      tags:
+      - registration-controller
+      operationId: registerNewUserWithoutCode
+      parameters:
+      - name: Operating-System
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.cosmose.registration-without-code+json:
+            schema:
+              $ref: '#/components/schemas/RegisterNewUserNoCodeDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserRegisteredDto'
+  /v1/registration/wait-list:
+    post:
+      tags:
+      - registration-controller
+      operationId: registerNewUserWithoutCodeOnTheWaitingList
+      parameters:
+      - name: Operating-System
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.cosmose.registration-without-code+json:
+            schema:
+              $ref: '#/components/schemas/RegisterNewUserNoCodeDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserRegisteredDto'
+      deprecated: true
+  /v1/registration/unsubscribe:
+    post:
+      tags:
+      - registration-controller
+      operationId: unsubscribe
+      parameters:
+      - name: unsubscribeDto
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/UnsubscribeDto'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+  /v1/newsletter:
+    post:
+      tags:
+      - newsletter-controller
+      operationId: subscribeToNewsletter_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribeDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+  /v1/merchants:
+    post:
+      tags:
+      - merchant-controller
+      operationId: saveMerchantFormData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMerchantRequestDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+  /v1/learn-to-code/register:
+    post:
+      tags:
+      - learn-to-code-controller
+      operationId: register_2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+  /v1/contact-forms:
+    post:
+      tags:
+      - contact-form-controller
+      operationId: save
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactForm'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+  /v1/registration/confirmed:
+    get:
+      tags:
+      - registration-controller
+      operationId: getNumberOfConfirmedRegistrations
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ConfirmedUsersDto'
+  /v1/registration-admin/waiting-list-users:
+    get:
+      tags:
+      - registration-admin-controller
+      operationId: getWaitingListUsers
+      parameters:
+      - name: phone_numbers
+        in: query
+        required: false
+        schema:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageUserDto'
+  /v1/user-account:
+    delete:
+      tags:
+      - forget-me-controller
+      operationId: deleteUserAccount
+      parameters:
+      - name: reason
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+components:
+  schemas:
+    ErrorDto:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          enum:
+          - BAD_REQUEST
+          - CODE_EXCEEDED
+          - CODE_NOT_FOUND
+          - USER_ALREADY_REGISTERED
+          - USER_NOT_FOUND
+          - FORBIDDEN
+          - MAX_RESETS_EXCEEDED
+          - INVITATION_DAILY_LIMIT_EXCEEDED
+          - EMAIL_ALREADY_TAKEN
+        message:
+          type: string
+    RestoreRequest:
+      required:
+      - phoneNumber
+      type: object
+      properties:
+        phoneNumber:
+          pattern: ^\+?[\d \-]{8,17}$
+          type: string
+    ApproveUsersDto:
+      type: object
+      properties:
+        telephoneNumbers:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+    InvitationUsageRequestDto:
+      type: object
+      properties:
+        installationIds:
+          maxItems: 1000
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+    InvitationTimestampDto:
+      type: object
+      properties:
+        createdTime:
+          type: string
+          format: date-time
+    InvitationsByInstallationId:
+      type: object
+      properties:
+        installationId:
+          type: string
+        invitations:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvitationTimestampDto'
+    TokenInfo:
+      type: object
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        type:
+          type: string
+        expires_in:
+          type: integer
+          format: int32
+    RegisterDto:
+      type: object
+      properties:
+        phone_number:
+          pattern: ^\+?[\d \-]{8,17}$
+          type: string
+    RegisterReviewerRequest:
+      required:
+      - phone_number
+      - registration_code
+      type: object
+      properties:
+        phone_number:
+          pattern: ^\+?[\d \-]{8,17}$
+          type: string
+        registration_code:
+          type: string
+    RegisterConfirmResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+        tokens:
+          $ref: '#/components/schemas/TokenInfo'
+        registration_redirect_url:
+          type: string
+    RegisterConfirmRequest:
+      required:
+      - otp_code
+      type: object
+      properties:
+        phone_number:
+          type: string
+        user_id:
+          type: string
+        otp_code:
+          pattern: ^\d{4}$
+          type: string
+    CreateSchoolDto:
+      required:
+      - city
+      - coordinatorName
+      - email
+      - name
+      - phoneNumber
+      - studentsNumber
+      - voivodeship
+      type: object
+      properties:
+        name:
+          type: string
+        coordinatorName:
+          type: string
+        city:
+          type: string
+        voivodeship:
+          type: string
+        email:
+          type: string
+        phoneNumber:
+          pattern: ^\+?[\d \-]{8,17}$
+          type: string
+        studentsNumber:
+          type: integer
+          format: int32
+    SubscribeDto:
+      required:
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+        source:
+          type: string
+        language:
+          type: string
+    RegisterNewUserNoCodeDto:
+      required:
+      - mobileNumber
+      type: object
+      properties:
+        mobileNumber:
+          pattern: ^\+?[\d \-]{8,17}$
+          type: string
+        sendBestDeals:
+          type: boolean
+        source:
+          type: string
+        utmSource:
+          type: string
+        registrationItemId:
+          type: string
+        url:
+          type: string
+    UserRegisteredDto:
+      type: object
+      properties:
+        registeredUserStatus:
+          type: string
+          enum:
+          - APPROVED
+          - WAITING_LIST
+        newUser:
+          type: boolean
+    UnsubscribeDto:
+      type: object
+      properties:
+        from:
+          type: string
+        body:
+          type: string
+    CreateMerchantRequestDto:
+      required:
+      - businessEmail
+      - businessType
+      - firstName
+      - lastName
+      - phoneNumber
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phoneNumber:
+          pattern: ^\+?[\d \-]{8,17}$
+          type: string
+        businessEmail:
+          type: string
+        website:
+          type: string
+        businessType:
+          type: string
+        comment:
+          type: string
+        sourceUrl:
+          type: string
+    UserDto:
+      required:
+      - age
+      - city
+      - country
+      - email
+      - firstName
+      - language
+      - lastName
+      - password
+      - promoCode
+      type: object
+      properties:
+        firstName:
+          type: string
+        guardianName:
+          type: string
+        age:
+          type: integer
+          format: int32
+        language:
+          pattern: ^(en|es|pl|it|oo)$
+          type: string
+        country:
+          type: string
+        city:
+          type: string
+        email:
+          type: string
+        promoCode:
+          type: string
+        password:
+          type: string
+        source:
+          type: string
+        lastName:
+          type: string
+        preferredLanguage:
+          type: string
+    InvitationRequestDto:
+      type: object
+      properties:
+        mobileNumber:
+          pattern: ^\+?[\d \-]{8,17}$
+          type: string
+    InvitationDto:
+      type: object
+      properties:
+        localizedMessage:
+          type: string
+    ContactForm:
+      required:
+      - countryCode
+      - email
+      - firstName
+      - lastName
+      - mobileNumber
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        position:
+          type: string
+        companyName:
+          type: string
+        email:
+          type: string
+        countryCode:
+          type: string
+        mobileNumber:
+          type: string
+        message:
+          type: string
+        createdTime:
+          type: string
+          format: date-time
+    ConfirmedUsersDto:
+      type: object
+      properties:
+        value:
+          type: integer
+          format: int64
+    Pageable:
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          minimum: 1
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            type: string
+    PageUserDto:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDto'
+        number:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortObject'
+        numberOfElements:
+          type: integer
+          format: int32
+        empty:
+          type: boolean
+    PageableObject:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        offset:
+          type: integer
+          format: int64
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortObject'
+        paged:
+          type: boolean
+        unpaged:
+          type: boolean
+    SortObject:
+      type: object
+      properties:
+        direction:
+          type: string
+        nullHandling:
+          type: string
+        ascending:
+          type: boolean
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+    InvitationUsageDto:
+      type: object
+      properties:
+        installationId:
+          type: string
+        availableInvitations:
+          type: integer
+          format: int64
+        convertedInvitations:
+          type: integer
+          format: int64
+  securitySchemes:
+    bearerAuth:
+      type: http
+      name: bearerAuth
+      scheme: bearer
+      bearerFormat: JWT
+x-evidence:
+  fetched: '2026-08-11'
+  url: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
+  http_status: 200
+  content_type: application/json
