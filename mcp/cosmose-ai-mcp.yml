@@ -4,11 +4,11 @@ source: openapi/cosmose-ai-deal-hunter-registration-api-openapi.yml
 status: candidate
 official_server: false
 pointer_emitted: false
-pointer_note: >-
-  NO `type: MCPServer` POINTER IS WIRED IN apis.yml, DELIBERATELY. Cosmose AI operates no MCP server. This file is a
-  derived candidate showing what one over the single public contract could expose; wiring the canonical pointer would
-  assert a surface the provider does not serve and would earn score for it. If Cosmose ever ships a real endpoint,
-  replace this file with the searched artifact and add the pointer then.
+pointer_note: 'NO `type: MCPServer` POINTER IS WIRED IN apis.yml, DELIBERATELY. Cosmose AI operates no
+  MCP server. This file is a derived candidate showing what one over the single public contract could
+  expose; wiring the canonical pointer would assert a surface the provider does not serve and would earn
+  score for it. If Cosmose ever ships a real endpoint, replace this file with the searched artifact and
+  add the pointer then.'
 search:
   performed: '2026-08-11'
   result: none
@@ -33,13 +33,12 @@ candidate_server:
   url: null
   auth: bearer JWT, per authentication/cosmose-ai-authentication.yml
   backing_api: Cosmose AI Deal Hunter Registration API
-  input_schema_note: >-
-    Each tool below would inherit the parameters and requestBody of the named operationId verbatim from
-    openapi/cosmose-ai-deal-hunter-registration-api-openapi.yml. No input schema is invented here.
-  scope_warning: >-
-    Most of this surface creates or destroys consumer accounts and personal records. A real MCP server over it would
-    need per-tool consequence gating before any of the write tools were exposed to an agent — the underlying contract
-    has no idempotency key, so a retried tool call cannot be deduplicated.
+  input_schema_note: Each tool below would inherit the parameters and requestBody of the named operationId
+    verbatim from openapi/cosmose-ai-deal-hunter-registration-api-openapi.yml. No input schema is invented
+    here.
+  scope_warning: Most of this surface creates or destroys consumer accounts and personal records. A real
+    MCP server over it would need per-tool consequence gating before any of the write tools were exposed
+    to an agent — the underlying contract has no idempotency key, so a retried tool call cannot be deduplicated.
 candidate_tools:
 - tool: get_invitation_usage
   category: invitations
@@ -74,9 +73,8 @@ candidate_tools:
   path: /v1/registration-admin/waiting-list-users
   consequence: read
   sensitive: true
-  note: >-
-    Returns PageUserDto → UserDto, which the contract declares as carrying a `password` field. Would not be safe to
-    expose to an agent as published.
+  note: Returns PageUserDto → UserDto, which the contract declares as carrying a `password` field. Would
+    not be safe to expose to an agent as published.
 - tool: approve_waiting_list_users
   category: admin
   rest: approveUsers
@@ -180,3 +178,8 @@ coverage:
   openapi_operations: 24
   candidate_tools: 19
   excluded: 5
+deployment:
+  mode: none
+  verified: derived
+  checked: '2026-08-12'
+  source: catalog MCP census

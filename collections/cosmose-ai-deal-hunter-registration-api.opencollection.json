@@ -1,0 +1,558 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cosmose AI Deal Hunter Registration API",
+    "version": "v0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "forget-me-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "restoreUserAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/user-account/restore",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "deleteUserAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/user-account",
+            "params": [
+              {
+                "name": "reason",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "registration-admin-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "approveUsers",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/registration-admin/approval",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "getWaitingListUsers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/registration-admin/waiting-list-users",
+            "params": [
+              {
+                "name": "phone_numbers",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageable",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "invitation-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getInvitationUsage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/invitations",
+            "headers": [
+              {
+                "name": "Installation-Id",
+                "value": ""
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "createInvitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/invitations",
+            "headers": [
+              {
+                "name": "Installation-Id",
+                "value": ""
+              },
+              {
+                "name": "Number-Prefix",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "getInvitationTimestamps",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/invitations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "token-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "generateTokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v2/token",
+            "headers": [
+              {
+                "name": "Installation-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "refresh_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "grant_type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "onboarding-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "register",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v2/register",
+            "headers": [
+              {
+                "name": "Operating-System",
+                "value": ""
+              },
+              {
+                "name": "Installation-Id",
+                "value": ""
+              },
+              {
+                "name": "App-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "registerReviewer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v2/register-reviewer",
+            "headers": [
+              {
+                "name": "Operating-System",
+                "value": ""
+              },
+              {
+                "name": "Installation-Id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "confirmRegistration_1",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v2/confirm-registration",
+            "headers": [
+              {
+                "name": "Installation-Id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "kkn-onboarding-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "register_1",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v2/kkn-register",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "confirmRegistration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v2/kkn-confirm-registration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "crucible-token-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "generateTokens_1",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v2/crucible-token",
+            "headers": [
+              {
+                "name": "Api-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "refresh_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "grant_type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "school-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "saveSchool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/schools",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "subscribeToNewsletter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/schools/newsletter",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "registration-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "registerNewUserWithoutCode",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/registration",
+            "headers": [
+              {
+                "name": "Operating-System",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "registerNewUserWithoutCodeOnTheWaitingList",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/registration/wait-list",
+            "headers": [
+              {
+                "name": "Operating-System",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "unsubscribe",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/registration/unsubscribe",
+            "params": [
+              {
+                "name": "unsubscribeDto",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getNumberOfConfirmedRegistrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/registration/confirmed"
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "newsletter-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "subscribeToNewsletter_1",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/newsletter",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "merchant-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "saveMerchantFormData",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/merchants",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "learn-to-code-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "register_2",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/learn-to-code/register",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "contact-form-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "save",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v1/contact-forms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
