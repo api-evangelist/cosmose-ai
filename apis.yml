@@ -20,6 +20,17 @@ specificationVersion: '0.23'
 created: '2026-08-11'
 modified: '2026-08-11'
 tags:
+- Retail Intelligence
+- offline-analytics
+- Location Intelligence
+- AdTech
+- consumer-behavior
+- Shopper Analytics
+- Mobile SDK
+- Advertising
+- Artificial Intelligence
+- Singapore
+tags_raw:
 - retail-intelligence
 - offline-analytics
 - location-intelligence
@@ -42,6 +53,13 @@ apis:
   humanURL: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
   baseURL: https://api.sg.cosmose.co/deal-hunter-registration-api
   tags:
+  - Registration
+  - Onboarding
+  - Identity
+  - Invitations
+  - Consumer App
+  - kaikai
+  tags_raw:
   - registration
   - onboarding
   - identity
