@@ -42,35 +42,289 @@ tags_raw:
 - artificial-intelligence
 - singapore
 apis:
-- name: Cosmose AI Deal Hunter Registration API
+- aid: cosmose-ai:cosmose-ai-contact-form-controller-api
+  name: Cosmose AI Contact Form Controller API
   description: >-
-    Registration, onboarding, invitation and account-lifecycle service behind Cosmose AI's KaiKai / Deal Hunter
-    consumer app, plus the merchant, school, newsletter and contact lead-capture forms on kaikai.ai and
-    cosmose.ai. 24 operations across registration, waiting list, invitation issuance and usage, JWT token and
-    refresh-token issuance, admin approval of waiting-list users, and a GDPR-style forget-me delete/restore pair.
-    The OpenAPI is served unauthenticated from the Singapore gateway; the operations themselves apply a global
-    bearerAuth (JWT) requirement.
+    The contact-form-controller API from Cosmose AI — 1 operation(s) for contact-form-controller.
   humanURL: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
   baseURL: https://api.sg.cosmose.co/deal-hunter-registration-api
   tags:
-  - Registration
-  - Onboarding
-  - Identity
-  - Invitations
-  - Consumer App
-  - kaikai
-  tags_raw:
-  - registration
-  - onboarding
-  - identity
-  - invitations
-  - consumer-app
-  - kaikai
+  - contact-form-controller
   properties:
   - type: OpenAPI
-    url: openapi/cosmose-ai-deal-hunter-registration-api-openapi.yml
-  - type: Overlay
-    url: overlays/cosmose-ai-deal-hunter-registration-api-overlay.yaml
+    url: openapi/cosmose-ai-contact-form-controller-api-openapi.yml
+  - type: APIReference
+    url: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  - type: Authentication
+    url: authentication/cosmose-ai-authentication.yml
+  - type: Conventions
+    url: conventions/cosmose-ai-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cosmose-ai-problem-types.yml
+  - type: DataModel
+    url: data-model/cosmose-ai-data-model.yml
+  - type: RateLimits
+    url: rate-limits/cosmose-ai-rate-limits.yml
+- aid: cosmose-ai:cosmose-ai-crucible-token-controller-api
+  name: Cosmose AI Crucible Token Controller API
+  description: >-
+    The crucible-token-controller API from Cosmose AI — 1 operation(s) for crucible-token-controller.
+  humanURL: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  baseURL: https://api.sg.cosmose.co/deal-hunter-registration-api
+  tags:
+  - crucible-token-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/cosmose-ai-crucible-token-controller-api-openapi.yml
+  - type: APIReference
+    url: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  - type: Authentication
+    url: authentication/cosmose-ai-authentication.yml
+  - type: Conventions
+    url: conventions/cosmose-ai-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cosmose-ai-problem-types.yml
+  - type: DataModel
+    url: data-model/cosmose-ai-data-model.yml
+  - type: RateLimits
+    url: rate-limits/cosmose-ai-rate-limits.yml
+- aid: cosmose-ai:cosmose-ai-forget-me-controller-api
+  name: Cosmose AI Forget Me Controller API
+  description: The forget-me-controller API from Cosmose AI — 2 operation(s) for forget-me-controller.
+  humanURL: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  baseURL: https://api.sg.cosmose.co/deal-hunter-registration-api
+  tags:
+  - forget-me-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/cosmose-ai-forget-me-controller-api-openapi.yml
+  - type: APIReference
+    url: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  - type: Authentication
+    url: authentication/cosmose-ai-authentication.yml
+  - type: Conventions
+    url: conventions/cosmose-ai-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cosmose-ai-problem-types.yml
+  - type: DataModel
+    url: data-model/cosmose-ai-data-model.yml
+  - type: RateLimits
+    url: rate-limits/cosmose-ai-rate-limits.yml
+- aid: cosmose-ai:cosmose-ai-invitation-controller-api
+  name: Cosmose AI Invitation Controller API
+  description: >-
+    The invitation-controller API from Cosmose AI — 1 operation(s) for invitation-controller.
+  humanURL: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  baseURL: https://api.sg.cosmose.co/deal-hunter-registration-api
+  tags:
+  - invitation-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/cosmose-ai-invitation-controller-api-openapi.yml
+  - type: APIReference
+    url: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  - type: Authentication
+    url: authentication/cosmose-ai-authentication.yml
+  - type: Conventions
+    url: conventions/cosmose-ai-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cosmose-ai-problem-types.yml
+  - type: DataModel
+    url: data-model/cosmose-ai-data-model.yml
+  - type: RateLimits
+    url: rate-limits/cosmose-ai-rate-limits.yml
+- aid: cosmose-ai:cosmose-ai-kkn-onboarding-controller-api
+  name: Cosmose AI Kkn Onboarding Controller API
+  description: >-
+    The kkn-onboarding-controller API from Cosmose AI — 2 operation(s) for kkn-onboarding-controller.
+  humanURL: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  baseURL: https://api.sg.cosmose.co/deal-hunter-registration-api
+  tags:
+  - kkn-onboarding-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/cosmose-ai-kkn-onboarding-controller-api-openapi.yml
+  - type: APIReference
+    url: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  - type: Authentication
+    url: authentication/cosmose-ai-authentication.yml
+  - type: Conventions
+    url: conventions/cosmose-ai-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cosmose-ai-problem-types.yml
+  - type: DataModel
+    url: data-model/cosmose-ai-data-model.yml
+  - type: RateLimits
+    url: rate-limits/cosmose-ai-rate-limits.yml
+- aid: cosmose-ai:cosmose-ai-learn-to-code-controller-api
+  name: Cosmose AI Learn To Code Controller API
+  description: >-
+    The learn-to-code-controller API from Cosmose AI — 1 operation(s) for learn-to-code-controller.
+  humanURL: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  baseURL: https://api.sg.cosmose.co/deal-hunter-registration-api
+  tags:
+  - learn-to-code-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/cosmose-ai-learn-to-code-controller-api-openapi.yml
+  - type: APIReference
+    url: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  - type: Authentication
+    url: authentication/cosmose-ai-authentication.yml
+  - type: Conventions
+    url: conventions/cosmose-ai-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cosmose-ai-problem-types.yml
+  - type: DataModel
+    url: data-model/cosmose-ai-data-model.yml
+  - type: RateLimits
+    url: rate-limits/cosmose-ai-rate-limits.yml
+- aid: cosmose-ai:cosmose-ai-merchant-controller-api
+  name: Cosmose AI Merchant Controller API
+  description: The merchant-controller API from Cosmose AI — 1 operation(s) for merchant-controller.
+  humanURL: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  baseURL: https://api.sg.cosmose.co/deal-hunter-registration-api
+  tags:
+  - merchant-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/cosmose-ai-merchant-controller-api-openapi.yml
+  - type: APIReference
+    url: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  - type: Authentication
+    url: authentication/cosmose-ai-authentication.yml
+  - type: Conventions
+    url: conventions/cosmose-ai-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cosmose-ai-problem-types.yml
+  - type: DataModel
+    url: data-model/cosmose-ai-data-model.yml
+  - type: RateLimits
+    url: rate-limits/cosmose-ai-rate-limits.yml
+- aid: cosmose-ai:cosmose-ai-newsletter-controller-api
+  name: Cosmose AI Newsletter Controller API
+  description: >-
+    The newsletter-controller API from Cosmose AI — 1 operation(s) for newsletter-controller.
+  humanURL: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  baseURL: https://api.sg.cosmose.co/deal-hunter-registration-api
+  tags:
+  - newsletter-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/cosmose-ai-newsletter-controller-api-openapi.yml
+  - type: APIReference
+    url: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  - type: Authentication
+    url: authentication/cosmose-ai-authentication.yml
+  - type: Conventions
+    url: conventions/cosmose-ai-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cosmose-ai-problem-types.yml
+  - type: DataModel
+    url: data-model/cosmose-ai-data-model.yml
+  - type: RateLimits
+    url: rate-limits/cosmose-ai-rate-limits.yml
+- aid: cosmose-ai:cosmose-ai-onboarding-controller-api
+  name: Cosmose AI Onboarding Controller API
+  description: >-
+    The onboarding-controller API from Cosmose AI — 3 operation(s) for onboarding-controller.
+  humanURL: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  baseURL: https://api.sg.cosmose.co/deal-hunter-registration-api
+  tags:
+  - onboarding-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/cosmose-ai-onboarding-controller-api-openapi.yml
+  - type: APIReference
+    url: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  - type: Authentication
+    url: authentication/cosmose-ai-authentication.yml
+  - type: Conventions
+    url: conventions/cosmose-ai-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cosmose-ai-problem-types.yml
+  - type: DataModel
+    url: data-model/cosmose-ai-data-model.yml
+  - type: RateLimits
+    url: rate-limits/cosmose-ai-rate-limits.yml
+- aid: cosmose-ai:cosmose-ai-registration-admin-controller-api
+  name: Cosmose AI Registration Admin Controller API
+  description: >-
+    The registration-admin-controller API from Cosmose AI — 2 operation(s) for registration-admin-controller.
+  humanURL: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  baseURL: https://api.sg.cosmose.co/deal-hunter-registration-api
+  tags:
+  - registration-admin-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/cosmose-ai-registration-admin-controller-api-openapi.yml
+  - type: APIReference
+    url: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  - type: Authentication
+    url: authentication/cosmose-ai-authentication.yml
+  - type: Conventions
+    url: conventions/cosmose-ai-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cosmose-ai-problem-types.yml
+  - type: DataModel
+    url: data-model/cosmose-ai-data-model.yml
+  - type: RateLimits
+    url: rate-limits/cosmose-ai-rate-limits.yml
+- aid: cosmose-ai:cosmose-ai-registration-controller-api
+  name: Cosmose AI Registration Controller API
+  description: >-
+    The registration-controller API from Cosmose AI — 4 operation(s) for registration-controller.
+  humanURL: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  baseURL: https://api.sg.cosmose.co/deal-hunter-registration-api
+  tags:
+  - registration-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/cosmose-ai-registration-controller-api-openapi.yml
+  - type: APIReference
+    url: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  - type: Authentication
+    url: authentication/cosmose-ai-authentication.yml
+  - type: Conventions
+    url: conventions/cosmose-ai-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cosmose-ai-problem-types.yml
+  - type: DataModel
+    url: data-model/cosmose-ai-data-model.yml
+  - type: RateLimits
+    url: rate-limits/cosmose-ai-rate-limits.yml
+- aid: cosmose-ai:cosmose-ai-school-controller-api
+  name: Cosmose AI School Controller API
+  description: The school-controller API from Cosmose AI — 2 operation(s) for school-controller.
+  humanURL: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  baseURL: https://api.sg.cosmose.co/deal-hunter-registration-api
+  tags:
+  - school-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/cosmose-ai-school-controller-api-openapi.yml
+  - type: APIReference
+    url: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  - type: Authentication
+    url: authentication/cosmose-ai-authentication.yml
+  - type: Conventions
+    url: conventions/cosmose-ai-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cosmose-ai-problem-types.yml
+  - type: DataModel
+    url: data-model/cosmose-ai-data-model.yml
+  - type: RateLimits
+    url: rate-limits/cosmose-ai-rate-limits.yml
+- aid: cosmose-ai:cosmose-ai-token-controller-api
+  name: Cosmose AI Token Controller API
+  description: The token-controller API from Cosmose AI — 1 operation(s) for token-controller.
+  humanURL: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
+  baseURL: https://api.sg.cosmose.co/deal-hunter-registration-api
+  tags:
+  - token-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/cosmose-ai-token-controller-api-openapi.yml
   - type: APIReference
     url: https://api.sg.cosmose.co/deal-hunter-registration-api/swagger-ui.html
   - type: Authentication
@@ -84,6 +338,8 @@ apis:
   - type: RateLimits
     url: rate-limits/cosmose-ai-rate-limits.yml
 common:
+- type: Overlay
+  url: overlays/cosmose-ai-deal-hunter-registration-api-overlay.yaml
 - type: Website
   url: https://cosmose.ai/
 - type: About
