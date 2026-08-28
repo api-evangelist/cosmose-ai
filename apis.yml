@@ -12,6 +12,18 @@ description: >-
   no self-serve signup. Its API surface is nonetheless partly public — an unauthenticated springdoc OpenAPI 3.0.1
   document for the KaiKai Deal Hunter registration service is served from the Singapore gateway, and its iOS
   SDKs are distributed through a first-party CocoaPods spec repository on GitHub.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cosmose.ai/assets/imgs/open-graph-logo.jpeg
 url: https://raw.githubusercontent.com/api-evangelist/cosmose-ai/refs/heads/main/apis.yml
 x-type: company
