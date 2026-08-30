@@ -1,0 +1,214 @@
+openapi: 3.2.0
+info:
+  title: Cosmose AI Deal Hunter Registration Invitation Controller API
+  description: Public registration, onboarding, invitation and account-lifecycle API behind Cosmose AI's KaiKai / Deal Hunter consumer app and its merchant and school lead-capture forms. Harvested verbatim from the provider's live springdoc endpoint at https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs; the only change in this refined copy is the servers[] block, which upstream advertises the internal cluster service name http://deal-hunter-registration-api/deal-hunter-registration-api instead of the reachable public gateway. See overlays/cosmose-ai-deal-hunter-registration-api-overlay.yaml for the exact delta.
+  version: v0
+  x-harvested-from: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
+  x-upstream-info:
+    title: OpenAPI definition
+    version: v0
+servers:
+- url: https://api.sg.cosmose.co/deal-hunter-registration-api
+  description: Singapore production gateway (observed reachable, HTTP 200 on /v3/api-docs)
+security:
+- bearerAuth: []
+tags:
+- name: invitation-controller
+paths:
+  /v1/invitations:
+    get:
+      tags:
+      - invitation-controller
+      operationId: getInvitationUsage
+      parameters:
+      - name: Installation-Id
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvitationUsageDto'
+    put:
+      tags:
+      - invitation-controller
+      operationId: getInvitationTimestamps
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvitationUsageRequestDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvitationsByInstallationId'
+    post:
+      tags:
+      - invitation-controller
+      operationId: createInvitation
+      parameters:
+      - name: Installation-Id
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Number-Prefix
+        in: header
+        required: false
+        schema:
+          type: string
+          default: '+65'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvitationRequestDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvitationDto'
+components:
+  schemas:
+    InvitationUsageDto:
+      type: object
+      properties:
+        installationId:
+          type: string
+        availableInvitations:
+          type: integer
+          format: int64
+        convertedInvitations:
+          type: integer
+          format: int64
+    ErrorDto:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          enum:
+          - BAD_REQUEST
+          - CODE_EXCEEDED
+          - CODE_NOT_FOUND
+          - USER_ALREADY_REGISTERED
+          - USER_NOT_FOUND
+          - FORBIDDEN
+          - MAX_RESETS_EXCEEDED
+          - INVITATION_DAILY_LIMIT_EXCEEDED
+          - EMAIL_ALREADY_TAKEN
+        message:
+          type: string
+    InvitationTimestampDto:
+      type: object
+      properties:
+        createdTime:
+          type: string
+          format: date-time
+    InvitationUsageRequestDto:
+      type: object
+      properties:
+        installationIds:
+          maxItems: 1000
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+    InvitationsByInstallationId:
+      type: object
+      properties:
+        installationId:
+          type: string
+        invitations:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvitationTimestampDto'
+    InvitationRequestDto:
+      type: object
+      properties:
+        mobileNumber:
+          pattern: ^\+?[\d \-]{8,17}$
+          type: string
+    InvitationDto:
+      type: object
+      properties:
+        localizedMessage:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      name: bearerAuth
+      scheme: bearer
+      bearerFormat: JWT
+x-evidence:
+  fetched: '2026-08-11'
+  url: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
+  http_status: 200
+  content_type: application/json

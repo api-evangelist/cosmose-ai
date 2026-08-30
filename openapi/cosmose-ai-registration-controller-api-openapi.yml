@@ -1,0 +1,235 @@
+openapi: 3.2.0
+info:
+  title: Cosmose AI Deal Hunter Registration Registration Controller API
+  description: Public registration, onboarding, invitation and account-lifecycle API behind Cosmose AI's KaiKai / Deal Hunter consumer app and its merchant and school lead-capture forms. Harvested verbatim from the provider's live springdoc endpoint at https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs; the only change in this refined copy is the servers[] block, which upstream advertises the internal cluster service name http://deal-hunter-registration-api/deal-hunter-registration-api instead of the reachable public gateway. See overlays/cosmose-ai-deal-hunter-registration-api-overlay.yaml for the exact delta.
+  version: v0
+  x-harvested-from: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
+  x-upstream-info:
+    title: OpenAPI definition
+    version: v0
+servers:
+- url: https://api.sg.cosmose.co/deal-hunter-registration-api
+  description: Singapore production gateway (observed reachable, HTTP 200 on /v3/api-docs)
+security:
+- bearerAuth: []
+tags:
+- name: registration-controller
+paths:
+  /v1/registration:
+    post:
+      tags:
+      - registration-controller
+      operationId: registerNewUserWithoutCode
+      parameters:
+      - name: Operating-System
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.cosmose.registration-without-code+json:
+            schema:
+              $ref: '#/components/schemas/RegisterNewUserNoCodeDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserRegisteredDto'
+  /v1/registration/wait-list:
+    post:
+      tags:
+      - registration-controller
+      operationId: registerNewUserWithoutCodeOnTheWaitingList
+      parameters:
+      - name: Operating-System
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.cosmose.registration-without-code+json:
+            schema:
+              $ref: '#/components/schemas/RegisterNewUserNoCodeDto'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserRegisteredDto'
+      deprecated: true
+  /v1/registration/unsubscribe:
+    post:
+      tags:
+      - registration-controller
+      operationId: unsubscribe
+      parameters:
+      - name: unsubscribeDto
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/UnsubscribeDto'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+  /v1/registration/confirmed:
+    get:
+      tags:
+      - registration-controller
+      operationId: getNumberOfConfirmedRegistrations
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ConfirmedUsersDto'
+components:
+  schemas:
+    UnsubscribeDto:
+      type: object
+      properties:
+        from:
+          type: string
+        body:
+          type: string
+    UserRegisteredDto:
+      type: object
+      properties:
+        registeredUserStatus:
+          type: string
+          enum:
+          - APPROVED
+          - WAITING_LIST
+        newUser:
+          type: boolean
+    ConfirmedUsersDto:
+      type: object
+      properties:
+        value:
+          type: integer
+          format: int64
+    ErrorDto:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          enum:
+          - BAD_REQUEST
+          - CODE_EXCEEDED
+          - CODE_NOT_FOUND
+          - USER_ALREADY_REGISTERED
+          - USER_NOT_FOUND
+          - FORBIDDEN
+          - MAX_RESETS_EXCEEDED
+          - INVITATION_DAILY_LIMIT_EXCEEDED
+          - EMAIL_ALREADY_TAKEN
+        message:
+          type: string
+    RegisterNewUserNoCodeDto:
+      required:
+      - mobileNumber
+      type: object
+      properties:
+        mobileNumber:
+          pattern: ^\+?[\d \-]{8,17}$
+          type: string
+        sendBestDeals:
+          type: boolean
+        source:
+          type: string
+        utmSource:
+          type: string
+        registrationItemId:
+          type: string
+        url:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      name: bearerAuth
+      scheme: bearer
+      bearerFormat: JWT
+x-evidence:
+  fetched: '2026-08-11'
+  url: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
+  http_status: 200
+  content_type: application/json

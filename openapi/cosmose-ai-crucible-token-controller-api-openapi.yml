@@ -1,0 +1,111 @@
+openapi: 3.2.0
+info:
+  title: Cosmose AI Deal Hunter Registration Crucible Token Controller API
+  description: Public registration, onboarding, invitation and account-lifecycle API behind Cosmose AI's KaiKai / Deal Hunter consumer app and its merchant and school lead-capture forms. Harvested verbatim from the provider's live springdoc endpoint at https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs; the only change in this refined copy is the servers[] block, which upstream advertises the internal cluster service name http://deal-hunter-registration-api/deal-hunter-registration-api instead of the reachable public gateway. See overlays/cosmose-ai-deal-hunter-registration-api-overlay.yaml for the exact delta.
+  version: v0
+  x-harvested-from: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
+  x-upstream-info:
+    title: OpenAPI definition
+    version: v0
+servers:
+- url: https://api.sg.cosmose.co/deal-hunter-registration-api
+  description: Singapore production gateway (observed reachable, HTTP 200 on /v3/api-docs)
+security:
+- bearerAuth: []
+tags:
+- name: crucible-token-controller
+paths:
+  /v2/crucible-token:
+    post:
+      tags:
+      - crucible-token-controller
+      operationId: generateTokens_1
+      parameters:
+      - name: Api-Key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: user_id
+        in: query
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: refresh_token
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: grant_type
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TokenInfo'
+components:
+  schemas:
+    ErrorDto:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          enum:
+          - BAD_REQUEST
+          - CODE_EXCEEDED
+          - CODE_NOT_FOUND
+          - USER_ALREADY_REGISTERED
+          - USER_NOT_FOUND
+          - FORBIDDEN
+          - MAX_RESETS_EXCEEDED
+          - INVITATION_DAILY_LIMIT_EXCEEDED
+          - EMAIL_ALREADY_TAKEN
+        message:
+          type: string
+    TokenInfo:
+      type: object
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        type:
+          type: string
+        expires_in:
+          type: integer
+          format: int32
+  securitySchemes:
+    bearerAuth:
+      type: http
+      name: bearerAuth
+      scheme: bearer
+      bearerFormat: JWT
+x-evidence:
+  fetched: '2026-08-11'
+  url: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
+  http_status: 200
+  content_type: application/json
