@@ -32,16 +32,16 @@ specificationVersion: '0.23'
 created: '2026-08-11'
 modified: '2026-08-11'
 tags:
-- retail-intelligence
+- Retail Intelligence
 - offline-analytics
-- location-intelligence
-- adtech
+- Location Intelligence
+- AdTech
 - consumer-behavior
-- shopper-analytics
-- mobile-sdk
+- Shopper Analytics
+- Mobile SDK
 - Advertising
-- artificial-intelligence
-- singapore
+- Artificial Intelligence
+- Singapore
 tags_raw:
 - retail-intelligence
 - offline-analytics
