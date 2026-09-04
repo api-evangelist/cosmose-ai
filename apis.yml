@@ -24,6 +24,21 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  probe_state: covered
+  source:
+  - authentication
+  - rate-limits
+  - security
+  generated: '2026-09-03'
+  method: derived
 image: https://cosmose.ai/assets/imgs/open-graph-logo.jpeg
 url: https://raw.githubusercontent.com/api-evangelist/cosmose-ai/refs/heads/main/apis.yml
 x-type: company
