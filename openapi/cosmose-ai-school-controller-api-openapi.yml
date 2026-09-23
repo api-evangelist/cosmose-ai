@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   title: Cosmose AI Deal Hunter Registration School Controller API
-  description: Public registration, onboarding, invitation and account-lifecycle API behind Cosmose AI's KaiKai / Deal Hunter consumer app and its merchant and school lead-capture forms. Harvested verbatim from the provider's live springdoc endpoint at https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs; the only change in this refined copy is the servers[] block, which upstream advertises the internal cluster service name http://deal-hunter-registration-api/deal-hunter-registration-api instead of the reachable public gateway. See overlays/cosmose-ai-deal-hunter-registration-api-overlay.yaml for the exact delta.
+  description: Public registration, onboarding, invitation and account-lifecycle API behind Cosmose AI's KaiKai / Deal Hunter consumer app and its merchant and school lead-capture forms.
   version: v0
   x-harvested-from: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
   x-upstream-info:
@@ -47,6 +47,8 @@ paths:
                 $ref: '#/components/schemas/ErrorDto'
         '200':
           description: OK
+      summary: Save school
+      x-summary-source: derived
   /v1/schools/newsletter:
     post:
       tags:
@@ -80,25 +82,10 @@ paths:
         '200':
           description: OK
       deprecated: true
+      summary: Subscribe to newsletter
+      x-summary-source: derived
 components:
   schemas:
-    ErrorDto:
-      type: object
-      properties:
-        errorCode:
-          type: string
-          enum:
-          - BAD_REQUEST
-          - CODE_EXCEEDED
-          - CODE_NOT_FOUND
-          - USER_ALREADY_REGISTERED
-          - USER_NOT_FOUND
-          - FORBIDDEN
-          - MAX_RESETS_EXCEEDED
-          - INVITATION_DAILY_LIMIT_EXCEEDED
-          - EMAIL_ALREADY_TAKEN
-        message:
-          type: string
     CreateSchoolDto:
       required:
       - city
@@ -126,6 +113,23 @@ components:
         studentsNumber:
           type: integer
           format: int32
+    ErrorDto:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          enum:
+          - BAD_REQUEST
+          - CODE_EXCEEDED
+          - CODE_NOT_FOUND
+          - USER_ALREADY_REGISTERED
+          - USER_NOT_FOUND
+          - FORBIDDEN
+          - MAX_RESETS_EXCEEDED
+          - INVITATION_DAILY_LIMIT_EXCEEDED
+          - EMAIL_ALREADY_TAKEN
+        message:
+          type: string
     SubscribeDto:
       required:
       - email

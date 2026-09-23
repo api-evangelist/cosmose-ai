@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Cosmose AI Deal Hunter Registration Registration Admin Controller API
-  description: Public registration, onboarding, invitation and account-lifecycle API behind Cosmose AI's KaiKai / Deal Hunter consumer app and its merchant and school lead-capture forms. Harvested verbatim from the provider's live springdoc endpoint at https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs; the only change in this refined copy is the servers[] block, which upstream advertises the internal cluster service name http://deal-hunter-registration-api/deal-hunter-registration-api instead of the reachable public gateway. See overlays/cosmose-ai-deal-hunter-registration-api-overlay.yaml for the exact delta.
+  title: Cosmose AI Deal Hunter Registration Registration Admin…
+  description: Public registration, onboarding, invitation and account-lifecycle API behind Cosmose AI's KaiKai / Deal Hunter consumer app and its merchant and school lead-capture forms.
   version: v0
   x-harvested-from: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
   x-upstream-info:
@@ -47,6 +47,8 @@ paths:
                 $ref: '#/components/schemas/ErrorDto'
         '200':
           description: OK
+      summary: Approve users
+      x-summary-source: derived
   /v1/registration-admin/waiting-list-users:
     get:
       tags:
@@ -91,53 +93,10 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/PageUserDto'
+      summary: Get waiting list users
+      x-summary-source: derived
 components:
   schemas:
-    Pageable:
-      type: object
-      properties:
-        page:
-          minimum: 0
-          type: integer
-          format: int32
-        size:
-          minimum: 1
-          type: integer
-          format: int32
-        sort:
-          type: array
-          items:
-            type: string
-    SortObject:
-      type: object
-      properties:
-        direction:
-          type: string
-        nullHandling:
-          type: string
-        ascending:
-          type: boolean
-        property:
-          type: string
-        ignoreCase:
-          type: boolean
-    ErrorDto:
-      type: object
-      properties:
-        errorCode:
-          type: string
-          enum:
-          - BAD_REQUEST
-          - CODE_EXCEEDED
-          - CODE_NOT_FOUND
-          - USER_ALREADY_REGISTERED
-          - USER_NOT_FOUND
-          - FORBIDDEN
-          - MAX_RESETS_EXCEEDED
-          - INVITATION_DAILY_LIMIT_EXCEEDED
-          - EMAIL_ALREADY_TAKEN
-        message:
-          type: string
     PageableObject:
       type: object
       properties:
@@ -158,47 +117,35 @@ components:
           type: boolean
         unpaged:
           type: boolean
-    ApproveUsersDto:
+    ErrorDto:
       type: object
       properties:
-        telephoneNumbers:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-    PageUserDto:
+        errorCode:
+          type: string
+          enum:
+          - BAD_REQUEST
+          - CODE_EXCEEDED
+          - CODE_NOT_FOUND
+          - USER_ALREADY_REGISTERED
+          - USER_NOT_FOUND
+          - FORBIDDEN
+          - MAX_RESETS_EXCEEDED
+          - INVITATION_DAILY_LIMIT_EXCEEDED
+          - EMAIL_ALREADY_TAKEN
+        message:
+          type: string
+    SortObject:
       type: object
       properties:
-        totalPages:
-          type: integer
-          format: int32
-        totalElements:
-          type: integer
-          format: int64
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
-        first:
+        direction:
+          type: string
+        nullHandling:
+          type: string
+        ascending:
           type: boolean
-        last:
-          type: boolean
-        size:
-          type: integer
-          format: int32
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserDto'
-        number:
-          type: integer
-          format: int32
-        sort:
-          type: array
-          items:
-            $ref: '#/components/schemas/SortObject'
-        numberOfElements:
-          type: integer
-          format: int32
-        empty:
+        property:
+          type: string
+        ignoreCase:
           type: boolean
     UserDto:
       required:
@@ -239,6 +186,63 @@ components:
           type: string
         preferredLanguage:
           type: string
+    PageUserDto:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDto'
+        number:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortObject'
+        numberOfElements:
+          type: integer
+          format: int32
+        empty:
+          type: boolean
+    Pageable:
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          minimum: 1
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            type: string
+    ApproveUsersDto:
+      type: object
+      properties:
+        telephoneNumbers:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
   securitySchemes:
     bearerAuth:
       type: http

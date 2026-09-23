@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Cosmose AI Deal Hunter Registration Registration Controller API
-  description: Public registration, onboarding, invitation and account-lifecycle API behind Cosmose AI's KaiKai / Deal Hunter consumer app and its merchant and school lead-capture forms. Harvested verbatim from the provider's live springdoc endpoint at https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs; the only change in this refined copy is the servers[] block, which upstream advertises the internal cluster service name http://deal-hunter-registration-api/deal-hunter-registration-api instead of the reachable public gateway. See overlays/cosmose-ai-deal-hunter-registration-api-overlay.yaml for the exact delta.
+  title: Cosmose AI Deal Hunter Registration Registration Controller…
+  description: Public registration, onboarding, invitation and account-lifecycle API behind Cosmose AI's KaiKai / Deal Hunter consumer app and its merchant and school lead-capture forms.
   version: v0
   x-harvested-from: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
   x-upstream-info:
@@ -57,6 +57,8 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/UserRegisteredDto'
+      summary: Register new user without code
+      x-summary-source: derived
   /v1/registration/wait-list:
     post:
       tags:
@@ -100,6 +102,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserRegisteredDto'
       deprecated: true
+      summary: Register new user without code on the waiting list
+      x-summary-source: derived
   /v1/registration/unsubscribe:
     post:
       tags:
@@ -132,6 +136,8 @@ paths:
                 $ref: '#/components/schemas/ErrorDto'
         '200':
           description: OK
+      summary: Unsubscribe
+      x-summary-source: derived
   /v1/registration/confirmed:
     get:
       tags:
@@ -162,15 +168,10 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/ConfirmedUsersDto'
+      summary: Get number of confirmed registrations
+      x-summary-source: derived
 components:
   schemas:
-    UnsubscribeDto:
-      type: object
-      properties:
-        from:
-          type: string
-        body:
-          type: string
     UserRegisteredDto:
       type: object
       properties:
@@ -181,12 +182,13 @@ components:
           - WAITING_LIST
         newUser:
           type: boolean
-    ConfirmedUsersDto:
+    UnsubscribeDto:
       type: object
       properties:
-        value:
-          type: integer
-          format: int64
+        from:
+          type: string
+        body:
+          type: string
     ErrorDto:
       type: object
       properties:
@@ -222,6 +224,12 @@ components:
           type: string
         url:
           type: string
+    ConfirmedUsersDto:
+      type: object
+      properties:
+        value:
+          type: integer
+          format: int64
   securitySchemes:
     bearerAuth:
       type: http

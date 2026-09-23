@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Cosmose AI Deal Hunter Registration Kkn Onboarding Controller API
-  description: Public registration, onboarding, invitation and account-lifecycle API behind Cosmose AI's KaiKai / Deal Hunter consumer app and its merchant and school lead-capture forms. Harvested verbatim from the provider's live springdoc endpoint at https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs; the only change in this refined copy is the servers[] block, which upstream advertises the internal cluster service name http://deal-hunter-registration-api/deal-hunter-registration-api instead of the reachable public gateway. See overlays/cosmose-ai-deal-hunter-registration-api-overlay.yaml for the exact delta.
+  title: Cosmose AI Deal Hunter Registration Kkn Onboarding…
+  description: Public registration, onboarding, invitation and account-lifecycle API behind Cosmose AI's KaiKai / Deal Hunter consumer app and its merchant and school lead-capture forms.
   version: v0
   x-harvested-from: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
   x-upstream-info:
@@ -47,6 +47,8 @@ paths:
                 $ref: '#/components/schemas/ErrorDto'
         '200':
           description: OK
+      summary: Register 1
+      x-summary-source: derived
   /v2/kkn-confirm-registration:
     post:
       tags:
@@ -83,24 +85,21 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/RegisterConfirmResponse'
+      summary: Confirm registration
+      x-summary-source: derived
 components:
   schemas:
-    RegisterConfirmResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        error:
-          type: string
-        tokens:
-          $ref: '#/components/schemas/TokenInfo'
-        registration_redirect_url:
-          type: string
-    RegisterDto:
+    RegisterConfirmRequest:
+      required:
+      - otp_code
       type: object
       properties:
         phone_number:
-          pattern: ^\+?[\d \-]{8,17}$
+          type: string
+        user_id:
+          type: string
+        otp_code:
+          pattern: ^\d{4}$
           type: string
     ErrorDto:
       type: object
@@ -119,18 +118,6 @@ components:
           - EMAIL_ALREADY_TAKEN
         message:
           type: string
-    RegisterConfirmRequest:
-      required:
-      - otp_code
-      type: object
-      properties:
-        phone_number:
-          type: string
-        user_id:
-          type: string
-        otp_code:
-          pattern: ^\d{4}$
-          type: string
     TokenInfo:
       type: object
       properties:
@@ -143,6 +130,23 @@ components:
         expires_in:
           type: integer
           format: int32
+    RegisterConfirmResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+        tokens:
+          $ref: '#/components/schemas/TokenInfo'
+        registration_redirect_url:
+          type: string
+    RegisterDto:
+      type: object
+      properties:
+        phone_number:
+          pattern: ^\+?[\d \-]{8,17}$
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

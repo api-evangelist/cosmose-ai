@@ -1,0 +1,59 @@
+{
+  "provider": "cosmose-ai",
+  "sources": [
+    "_original/cosmose-ai-deal-hunter-registration-api-openapi.yml"
+  ],
+  "outputs": [
+    "cosmose-ai-contact-form-controller-api-openapi.yml",
+    "cosmose-ai-crucible-token-controller-api-openapi.yml",
+    "cosmose-ai-forget-me-controller-api-openapi.yml",
+    "cosmose-ai-invitation-controller-api-openapi.yml",
+    "cosmose-ai-kkn-onboarding-controller-api-openapi.yml",
+    "cosmose-ai-learn-to-code-controller-api-openapi.yml",
+    "cosmose-ai-merchant-controller-api-openapi.yml",
+    "cosmose-ai-newsletter-controller-api-openapi.yml",
+    "cosmose-ai-onboarding-controller-api-openapi.yml",
+    "cosmose-ai-registration-admin-controller-api-openapi.yml",
+    "cosmose-ai-registration-controller-api-openapi.yml",
+    "cosmose-ai-school-controller-api-openapi.yml",
+    "cosmose-ai-token-controller-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "cosmose-ai-deal-hunter-registration-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "cosmose-ai-deal-hunter-registration-api-openapi.yml: declared missing tag: contact-form-controller",
+    "cosmose-ai-deal-hunter-registration-api-openapi.yml: declared missing tag: crucible-token-controller",
+    "cosmose-ai-deal-hunter-registration-api-openapi.yml: declared missing tag: forget-me-controller",
+    "cosmose-ai-deal-hunter-registration-api-openapi.yml: declared missing tag: invitation-controller",
+    "cosmose-ai-deal-hunter-registration-api-openapi.yml: declared missing tag: kkn-onboarding-controller",
+    "cosmose-ai-deal-hunter-registration-api-openapi.yml: declared missing tag: learn-to-code-controller",
+    "cosmose-ai-deal-hunter-registration-api-openapi.yml: declared missing tag: merchant-controller",
+    "cosmose-ai-deal-hunter-registration-api-openapi.yml: declared missing tag: newsletter-controller",
+    "cosmose-ai-deal-hunter-registration-api-openapi.yml: declared missing tag: onboarding-controller",
+    "cosmose-ai-deal-hunter-registration-api-openapi.yml: declared missing tag: registration-admin-controller",
+    "cosmose-ai-deal-hunter-registration-api-openapi.yml: declared missing tag: registration-controller",
+    "cosmose-ai-deal-hunter-registration-api-openapi.yml: declared missing tag: school-controller",
+    "cosmose-ai-deal-hunter-registration-api-openapi.yml: declared missing tag: token-controller",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/cosmose-ai-deal-hunter-registration-api.json: archived document superseded by a larger archived document",
+    "cosmose-ai-contact-form-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cosmose-ai-crucible-token-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cosmose-ai-forget-me-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cosmose-ai-invitation-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cosmose-ai-kkn-onboarding-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cosmose-ai-learn-to-code-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cosmose-ai-merchant-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cosmose-ai-newsletter-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cosmose-ai-onboarding-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cosmose-ai-registration-admin-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cosmose-ai-registration-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cosmose-ai-school-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cosmose-ai-token-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
