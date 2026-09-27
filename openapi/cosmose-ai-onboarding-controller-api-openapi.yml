@@ -163,17 +163,11 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RegisterConfirmRequest:
-      required:
-      - otp_code
+    RegisterDto:
       type: object
       properties:
         phone_number:
-          type: string
-        user_id:
-          type: string
-        otp_code:
-          pattern: ^\d{4}$
+          pattern: ^\+?[\d \-]{8,17}$
           type: string
     ErrorDto:
       type: object
@@ -192,18 +186,6 @@ components:
           - EMAIL_ALREADY_TAKEN
         message:
           type: string
-    TokenInfo:
-      type: object
-      properties:
-        access_token:
-          type: string
-        refresh_token:
-          type: string
-        type:
-          type: string
-        expires_in:
-          type: integer
-          format: int32
     RegisterConfirmResponse:
       type: object
       properties:
@@ -215,11 +197,17 @@ components:
           $ref: '#/components/schemas/TokenInfo'
         registration_redirect_url:
           type: string
-    RegisterDto:
+    RegisterConfirmRequest:
+      required:
+      - otp_code
       type: object
       properties:
         phone_number:
-          pattern: ^\+?[\d \-]{8,17}$
+          type: string
+        user_id:
+          type: string
+        otp_code:
+          pattern: ^\d{4}$
           type: string
     RegisterReviewerRequest:
       required:
@@ -232,6 +220,18 @@ components:
           type: string
         registration_code:
           type: string
+    TokenInfo:
+      type: object
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        type:
+          type: string
+        expires_in:
+          type: integer
+          format: int32
   securitySchemes:
     bearerAuth:
       type: http

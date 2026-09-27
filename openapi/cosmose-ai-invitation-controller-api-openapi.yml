@@ -176,26 +176,6 @@ components:
           - EMAIL_ALREADY_TAKEN
         message:
           type: string
-    InvitationsByInstallationId:
-      type: object
-      properties:
-        installationId:
-          type: string
-        invitations:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvitationTimestampDto'
-    InvitationTimestampDto:
-      type: object
-      properties:
-        createdTime:
-          type: string
-          format: date-time
-    InvitationDto:
-      type: object
-      properties:
-        localizedMessage:
-          type: string
     InvitationUsageDto:
       type: object
       properties:
@@ -207,6 +187,26 @@ components:
         convertedInvitations:
           type: integer
           format: int64
+    InvitationTimestampDto:
+      type: object
+      properties:
+        createdTime:
+          type: string
+          format: date-time
+    InvitationDto:
+      type: object
+      properties:
+        localizedMessage:
+          type: string
+    InvitationsByInstallationId:
+      type: object
+      properties:
+        installationId:
+          type: string
+        invitations:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvitationTimestampDto'
   securitySchemes:
     bearerAuth:
       type: http

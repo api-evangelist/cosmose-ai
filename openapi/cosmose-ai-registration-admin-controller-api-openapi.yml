@@ -97,25 +97,18 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PageableObject:
+    SortObject:
       type: object
       properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          format: int32
-        offset:
-          type: integer
-          format: int64
-        sort:
-          type: array
-          items:
-            $ref: '#/components/schemas/SortObject'
-        paged:
+        direction:
+          type: string
+        nullHandling:
+          type: string
+        ascending:
           type: boolean
-        unpaged:
+        property:
+          type: string
+        ignoreCase:
           type: boolean
     ErrorDto:
       type: object
@@ -134,18 +127,54 @@ components:
           - EMAIL_ALREADY_TAKEN
         message:
           type: string
-    SortObject:
+    Pageable:
       type: object
       properties:
-        direction:
-          type: string
-        nullHandling:
-          type: string
-        ascending:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          minimum: 1
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            type: string
+    PageUserDto:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        first:
           type: boolean
-        property:
-          type: string
-        ignoreCase:
+        last:
+          type: boolean
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDto'
+        number:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortObject'
+        numberOfElements:
+          type: integer
+          format: int32
+        empty:
           type: boolean
     UserDto:
       required:
@@ -186,55 +215,26 @@ components:
           type: string
         preferredLanguage:
           type: string
-    PageUserDto:
+    PageableObject:
       type: object
       properties:
-        totalPages:
+        pageNumber:
           type: integer
           format: int32
-        totalElements:
+        pageSize:
+          type: integer
+          format: int32
+        offset:
           type: integer
           format: int64
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
-        first:
-          type: boolean
-        last:
-          type: boolean
-        size:
-          type: integer
-          format: int32
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserDto'
-        number:
-          type: integer
-          format: int32
         sort:
           type: array
           items:
             $ref: '#/components/schemas/SortObject'
-        numberOfElements:
-          type: integer
-          format: int32
-        empty:
+        paged:
           type: boolean
-    Pageable:
-      type: object
-      properties:
-        page:
-          minimum: 0
-          type: integer
-          format: int32
-        size:
-          minimum: 1
-          type: integer
-          format: int32
-        sort:
-          type: array
-          items:
-            type: string
+        unpaged:
+          type: boolean
     ApproveUsersDto:
       type: object
       properties:
