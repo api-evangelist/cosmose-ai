@@ -103,6 +103,17 @@ components:
           - EMAIL_ALREADY_TAKEN
         message:
           type: string
+    SubscribeDto:
+      required:
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+        source:
+          type: string
+        language:
+          type: string
     CreateSchoolDto:
       required:
       - city
@@ -130,17 +141,6 @@ components:
         studentsNumber:
           type: integer
           format: int32
-    SubscribeDto:
-      required:
-      - email
-      type: object
-      properties:
-        email:
-          type: string
-        source:
-          type: string
-        language:
-          type: string
   securitySchemes:
     bearerAuth:
       type: http

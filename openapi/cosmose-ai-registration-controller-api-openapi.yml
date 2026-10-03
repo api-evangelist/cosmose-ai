@@ -172,23 +172,12 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UnsubscribeDto:
+    ConfirmedUsersDto:
       type: object
       properties:
-        from:
-          type: string
-        body:
-          type: string
-    UserRegisteredDto:
-      type: object
-      properties:
-        registeredUserStatus:
-          type: string
-          enum:
-          - APPROVED
-          - WAITING_LIST
-        newUser:
-          type: boolean
+        value:
+          type: integer
+          format: int64
     ErrorDto:
       type: object
       properties:
@@ -206,12 +195,13 @@ components:
           - EMAIL_ALREADY_TAKEN
         message:
           type: string
-    ConfirmedUsersDto:
+    UnsubscribeDto:
       type: object
       properties:
-        value:
-          type: integer
-          format: int64
+        from:
+          type: string
+        body:
+          type: string
     RegisterNewUserNoCodeDto:
       required:
       - mobileNumber
@@ -230,6 +220,16 @@ components:
           type: string
         url:
           type: string
+    UserRegisteredDto:
+      type: object
+      properties:
+        registeredUserStatus:
+          type: string
+          enum:
+          - APPROVED
+          - WAITING_LIST
+        newUser:
+          type: boolean
   securitySchemes:
     bearerAuth:
       type: http

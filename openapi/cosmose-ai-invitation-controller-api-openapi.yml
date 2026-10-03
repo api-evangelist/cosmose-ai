@@ -143,22 +143,17 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    InvitationDto:
+      type: object
+      properties:
+        localizedMessage:
+          type: string
     InvitationRequestDto:
       type: object
       properties:
         mobileNumber:
           pattern: ^\+?[\d \-]{8,17}$
           type: string
-    InvitationUsageRequestDto:
-      type: object
-      properties:
-        installationIds:
-          maxItems: 1000
-          minItems: 1
-          uniqueItems: true
-          type: array
-          items:
-            type: string
     ErrorDto:
       type: object
       properties:
@@ -193,11 +188,6 @@ components:
         createdTime:
           type: string
           format: date-time
-    InvitationDto:
-      type: object
-      properties:
-        localizedMessage:
-          type: string
     InvitationsByInstallationId:
       type: object
       properties:
@@ -207,6 +197,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InvitationTimestampDto'
+    InvitationUsageRequestDto:
+      type: object
+      properties:
+        installationIds:
+          maxItems: 1000
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: string
   securitySchemes:
     bearerAuth:
       type: http
