@@ -51,6 +51,17 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    SubscribeDto:
+      required:
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+        source:
+          type: string
+        language:
+          type: string
     ErrorDto:
       type: object
       properties:
@@ -67,17 +78,6 @@ components:
           - INVITATION_DAILY_LIMIT_EXCEEDED
           - EMAIL_ALREADY_TAKEN
         message:
-          type: string
-    SubscribeDto:
-      required:
-      - email
-      type: object
-      properties:
-        email:
-          type: string
-        source:
-          type: string
-        language:
           type: string
   securitySchemes:
     bearerAuth:

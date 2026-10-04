@@ -51,23 +51,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ErrorDto:
-      type: object
-      properties:
-        errorCode:
-          type: string
-          enum:
-          - BAD_REQUEST
-          - CODE_EXCEEDED
-          - CODE_NOT_FOUND
-          - USER_ALREADY_REGISTERED
-          - USER_NOT_FOUND
-          - FORBIDDEN
-          - MAX_RESETS_EXCEEDED
-          - INVITATION_DAILY_LIMIT_EXCEEDED
-          - EMAIL_ALREADY_TAKEN
-        message:
-          type: string
     UserDto:
       required:
       - age
@@ -106,6 +89,23 @@ components:
         lastName:
           type: string
         preferredLanguage:
+          type: string
+    ErrorDto:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          enum:
+          - BAD_REQUEST
+          - CODE_EXCEEDED
+          - CODE_NOT_FOUND
+          - USER_ALREADY_REGISTERED
+          - USER_NOT_FOUND
+          - FORBIDDEN
+          - MAX_RESETS_EXCEEDED
+          - INVITATION_DAILY_LIMIT_EXCEEDED
+          - EMAIL_ALREADY_TAKEN
+        message:
           type: string
   securitySchemes:
     bearerAuth:

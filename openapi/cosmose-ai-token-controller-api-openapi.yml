@@ -73,6 +73,18 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    TokenInfo:
+      type: object
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        type:
+          type: string
+        expires_in:
+          type: integer
+          format: int32
     ErrorDto:
       type: object
       properties:
@@ -90,18 +102,6 @@ components:
           - EMAIL_ALREADY_TAKEN
         message:
           type: string
-    TokenInfo:
-      type: object
-      properties:
-        access_token:
-          type: string
-        refresh_token:
-          type: string
-        type:
-          type: string
-        expires_in:
-          type: integer
-          format: int32
   securitySchemes:
     bearerAuth:
       type: http

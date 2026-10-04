@@ -154,6 +154,33 @@ components:
         mobileNumber:
           pattern: ^\+?[\d \-]{8,17}$
           type: string
+    InvitationUsageDto:
+      type: object
+      properties:
+        installationId:
+          type: string
+        availableInvitations:
+          type: integer
+          format: int64
+        convertedInvitations:
+          type: integer
+          format: int64
+    InvitationUsageRequestDto:
+      type: object
+      properties:
+        installationIds:
+          maxItems: 1000
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+    InvitationTimestampDto:
+      type: object
+      properties:
+        createdTime:
+          type: string
+          format: date-time
     ErrorDto:
       type: object
       properties:
@@ -171,23 +198,6 @@ components:
           - EMAIL_ALREADY_TAKEN
         message:
           type: string
-    InvitationUsageDto:
-      type: object
-      properties:
-        installationId:
-          type: string
-        availableInvitations:
-          type: integer
-          format: int64
-        convertedInvitations:
-          type: integer
-          format: int64
-    InvitationTimestampDto:
-      type: object
-      properties:
-        createdTime:
-          type: string
-          format: date-time
     InvitationsByInstallationId:
       type: object
       properties:
@@ -197,16 +207,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InvitationTimestampDto'
-    InvitationUsageRequestDto:
-      type: object
-      properties:
-        installationIds:
-          maxItems: 1000
-          minItems: 1
-          uniqueItems: true
-          type: array
-          items:
-            type: string
   securitySchemes:
     bearerAuth:
       type: http

@@ -97,6 +97,19 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    SortObject:
+      type: object
+      properties:
+        direction:
+          type: string
+        nullHandling:
+          type: string
+        ascending:
+          type: boolean
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
     UserDto:
       required:
       - age
@@ -136,51 +149,6 @@ components:
           type: string
         preferredLanguage:
           type: string
-    SortObject:
-      type: object
-      properties:
-        direction:
-          type: string
-        nullHandling:
-          type: string
-        ascending:
-          type: boolean
-        property:
-          type: string
-        ignoreCase:
-          type: boolean
-    Pageable:
-      type: object
-      properties:
-        page:
-          minimum: 0
-          type: integer
-          format: int32
-        size:
-          minimum: 1
-          type: integer
-          format: int32
-        sort:
-          type: array
-          items:
-            type: string
-    ErrorDto:
-      type: object
-      properties:
-        errorCode:
-          type: string
-          enum:
-          - BAD_REQUEST
-          - CODE_EXCEEDED
-          - CODE_NOT_FOUND
-          - USER_ALREADY_REGISTERED
-          - USER_NOT_FOUND
-          - FORBIDDEN
-          - MAX_RESETS_EXCEEDED
-          - INVITATION_DAILY_LIMIT_EXCEEDED
-          - EMAIL_ALREADY_TAKEN
-        message:
-          type: string
     PageableObject:
       type: object
       properties:
@@ -201,6 +169,21 @@ components:
           type: boolean
         unpaged:
           type: boolean
+    Pageable:
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          minimum: 1
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            type: string
     PageUserDto:
       type: object
       properties:
@@ -243,6 +226,23 @@ components:
           type: array
           items:
             type: string
+    ErrorDto:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          enum:
+          - BAD_REQUEST
+          - CODE_EXCEEDED
+          - CODE_NOT_FOUND
+          - USER_ALREADY_REGISTERED
+          - USER_NOT_FOUND
+          - FORBIDDEN
+          - MAX_RESETS_EXCEEDED
+          - INVITATION_DAILY_LIMIT_EXCEEDED
+          - EMAIL_ALREADY_TAKEN
+        message:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http
