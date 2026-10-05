@@ -1,0 +1,12 @@
+{
+ "url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs",
+ "requested_url": "https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 23104,
+ "sha256": "7cd5eb7ee7a14f7f5c854e2f6570b31eed73684ea7a0d78068dff32fe1658185",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
