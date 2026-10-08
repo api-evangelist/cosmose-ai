@@ -365,6 +365,8 @@ apis:
   - type: RateLimits
     url: rate-limits/cosmose-ai-rate-limits.yml
 common:
+- type: RateLimits
+  url: rate-limits/cosmose-ai-rate-limits.yml
 - type: Overlay
   url: overlays/cosmose-ai-deal-hunter-registration-api-overlay.yaml
 - type: Website
