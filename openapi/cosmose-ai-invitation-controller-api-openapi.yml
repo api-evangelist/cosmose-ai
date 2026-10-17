@@ -143,17 +143,42 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    InvitationDto:
+    InvitationsByInstallationId:
       type: object
       properties:
-        localizedMessage:
+        installationId:
           type: string
+        invitations:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvitationTimestampDto'
+    InvitationUsageRequestDto:
+      type: object
+      properties:
+        installationIds:
+          maxItems: 1000
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            type: string
     InvitationRequestDto:
       type: object
       properties:
         mobileNumber:
           pattern: ^\+?[\d \-]{8,17}$
           type: string
+    InvitationDto:
+      type: object
+      properties:
+        localizedMessage:
+          type: string
+    InvitationTimestampDto:
+      type: object
+      properties:
+        createdTime:
+          type: string
+          format: date-time
     InvitationUsageDto:
       type: object
       properties:
@@ -165,22 +190,6 @@ components:
         convertedInvitations:
           type: integer
           format: int64
-    InvitationUsageRequestDto:
-      type: object
-      properties:
-        installationIds:
-          maxItems: 1000
-          minItems: 1
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-    InvitationTimestampDto:
-      type: object
-      properties:
-        createdTime:
-          type: string
-          format: date-time
     ErrorDto:
       type: object
       properties:
@@ -198,15 +207,6 @@ components:
           - EMAIL_ALREADY_TAKEN
         message:
           type: string
-    InvitationsByInstallationId:
-      type: object
-      properties:
-        installationId:
-          type: string
-        invitations:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvitationTimestampDto'
   securitySchemes:
     bearerAuth:
       type: http

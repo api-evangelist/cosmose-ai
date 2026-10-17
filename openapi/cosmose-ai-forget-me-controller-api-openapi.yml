@@ -85,6 +85,14 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    RestoreRequest:
+      required:
+      - phoneNumber
+      type: object
+      properties:
+        phoneNumber:
+          pattern: ^\+?[\d \-]{8,17}$
+          type: string
     ErrorDto:
       type: object
       properties:
@@ -101,14 +109,6 @@ components:
           - INVITATION_DAILY_LIMIT_EXCEEDED
           - EMAIL_ALREADY_TAKEN
         message:
-          type: string
-    RestoreRequest:
-      required:
-      - phoneNumber
-      type: object
-      properties:
-        phoneNumber:
-          pattern: ^\+?[\d \-]{8,17}$
           type: string
   securitySchemes:
     bearerAuth:

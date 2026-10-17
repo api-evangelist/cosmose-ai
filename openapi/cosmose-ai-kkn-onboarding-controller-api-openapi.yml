@@ -89,12 +89,18 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RegisterDto:
+    TokenInfo:
       type: object
       properties:
-        phone_number:
-          pattern: ^\+?[\d \-]{8,17}$
+        access_token:
           type: string
+        refresh_token:
+          type: string
+        type:
+          type: string
+        expires_in:
+          type: integer
+          format: int32
     RegisterConfirmResponse:
       type: object
       properties:
@@ -118,18 +124,6 @@ components:
         otp_code:
           pattern: ^\d{4}$
           type: string
-    TokenInfo:
-      type: object
-      properties:
-        access_token:
-          type: string
-        refresh_token:
-          type: string
-        type:
-          type: string
-        expires_in:
-          type: integer
-          format: int32
     ErrorDto:
       type: object
       properties:
@@ -146,6 +140,12 @@ components:
           - INVITATION_DAILY_LIMIT_EXCEEDED
           - EMAIL_ALREADY_TAKEN
         message:
+          type: string
+    RegisterDto:
+      type: object
+      properties:
+        phone_number:
+          pattern: ^\+?[\d \-]{8,17}$
           type: string
   securitySchemes:
     bearerAuth:

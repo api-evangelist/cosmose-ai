@@ -97,6 +97,48 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ApproveUsersDto:
+      type: object
+      properties:
+        telephoneNumbers:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+    PageUserDto:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDto'
+        number:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortObject'
+        numberOfElements:
+          type: integer
+          format: int32
+        empty:
+          type: boolean
     SortObject:
       type: object
       properties:
@@ -110,6 +152,58 @@ components:
           type: string
         ignoreCase:
           type: boolean
+    PageableObject:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        offset:
+          type: integer
+          format: int64
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SortObject'
+        paged:
+          type: boolean
+        unpaged:
+          type: boolean
+    ErrorDto:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          enum:
+          - BAD_REQUEST
+          - CODE_EXCEEDED
+          - CODE_NOT_FOUND
+          - USER_ALREADY_REGISTERED
+          - USER_NOT_FOUND
+          - FORBIDDEN
+          - MAX_RESETS_EXCEEDED
+          - INVITATION_DAILY_LIMIT_EXCEEDED
+          - EMAIL_ALREADY_TAKEN
+        message:
+          type: string
+    Pageable:
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          minimum: 1
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            type: string
     UserDto:
       required:
       - age
@@ -148,100 +242,6 @@ components:
         lastName:
           type: string
         preferredLanguage:
-          type: string
-    PageableObject:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          format: int32
-        offset:
-          type: integer
-          format: int64
-        sort:
-          type: array
-          items:
-            $ref: '#/components/schemas/SortObject'
-        paged:
-          type: boolean
-        unpaged:
-          type: boolean
-    Pageable:
-      type: object
-      properties:
-        page:
-          minimum: 0
-          type: integer
-          format: int32
-        size:
-          minimum: 1
-          type: integer
-          format: int32
-        sort:
-          type: array
-          items:
-            type: string
-    PageUserDto:
-      type: object
-      properties:
-        totalPages:
-          type: integer
-          format: int32
-        totalElements:
-          type: integer
-          format: int64
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
-        first:
-          type: boolean
-        last:
-          type: boolean
-        size:
-          type: integer
-          format: int32
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserDto'
-        number:
-          type: integer
-          format: int32
-        sort:
-          type: array
-          items:
-            $ref: '#/components/schemas/SortObject'
-        numberOfElements:
-          type: integer
-          format: int32
-        empty:
-          type: boolean
-    ApproveUsersDto:
-      type: object
-      properties:
-        telephoneNumbers:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-    ErrorDto:
-      type: object
-      properties:
-        errorCode:
-          type: string
-          enum:
-          - BAD_REQUEST
-          - CODE_EXCEEDED
-          - CODE_NOT_FOUND
-          - USER_ALREADY_REGISTERED
-          - USER_NOT_FOUND
-          - FORBIDDEN
-          - MAX_RESETS_EXCEEDED
-          - INVITATION_DAILY_LIMIT_EXCEEDED
-          - EMAIL_ALREADY_TAKEN
-        message:
           type: string
   securitySchemes:
     bearerAuth:
