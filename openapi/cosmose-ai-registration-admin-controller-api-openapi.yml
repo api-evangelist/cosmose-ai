@@ -254,3 +254,9 @@ x-evidence:
   url: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
   http_status: 200
   content_type: application/json
+x-provenance:
+  method: harvested
+  publisher: Cosmose AI
+  source: https://api.sg.cosmose.co/deal-hunter-registration-api/v3/api-docs
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
